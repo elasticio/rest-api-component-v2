@@ -140,7 +140,7 @@ To send a form data two content types are available:
 *   `application/x-www-form-urlencoded` - used to submit simple values to a form
 *   `multipart/form-data` - used to submit (non-alphanumeric) data or file attachment in payload
 
-In both cases the payload gets transmitted in the message body.
+In both cases the payload gets transmitted into the message body.
 
 In case of `application/x-www-form-urlencoded` content type add the necessary parameters by giving the name and the values like:
 
