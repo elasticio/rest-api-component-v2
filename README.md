@@ -66,10 +66,13 @@ Notice: Specified for component REQUEST_TIMEOUT enviroment variable would be ove
 
 To use the REST API component with any restricted access API provide the authorisation information.
 
-![alt text](https://cdn.elastic.io/documentation/restapi-component-auth.png "REST API component Basic authorisation")
+![alt text](https://user-images.githubusercontent.com/8449044/95571339-ee70a600-0a30-11eb-972e-d512c1ef88d9.png "REST API component Basic authorisation")
 *Example above shows how to add the username/password to access the API during the integration flow design.*
 
 You can add the authorisation methods during the integration flow design or by going to your `Settings > Security credentials > REST client` and adding there.
+
+![alt text](https://user-images.githubusercontent.com/8449044/95571461-2f68ba80-0a31-11eb-9fff-c67b34506b00.png "REST API component OAuth2 authorisation")
+*Example above shows how to add new credential to access the API from Credentials page.*
 
 REST API component supports 4 authorisation types:
 
@@ -78,7 +81,9 @@ REST API component supports 4 authorisation types:
 *   `API Key Auth` - use it to provide `API Key` to access the resource
 *   `OAuth2` - use it to provide `Oauth2` credentials to access the resource. Currently it is implemented `Authorization code` OAuth2 flow.
 
-Please note that the result of creating a credential is an HTTP header automatically placed for you. You can also specify the authorisation in the headers section directly.
+To create `OAuth2` credential you have to choose Auth-client or create the new one. It must contains `Name`, `Client ID`, `Client Secret`, `Authorization Endpoint` and `Token Endpoint`.
+![alt text](https://user-images.githubusercontent.com/8449044/95571677-7e165480-0a31-11eb-9b45-915401d40e31.png "Creating auth client for REST API component")
+*Example above shows how to add new Auth-client to access the API.*
 
 ## Defining HTTP headers
 
