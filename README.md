@@ -69,7 +69,8 @@ To use the REST API component with any restricted access API provide the authori
 ![alt text](https://user-images.githubusercontent.com/8449044/95571339-ee70a600-0a30-11eb-972e-d512c1ef88d9.png "REST API component Basic authorisation")
 *Example above shows how to add the username/password to access the API during the integration flow design.*
 
-You can add the authorisation methods during the integration flow design or by going to your `Settings > Security credentials > REST client` and adding there.
+You can add the authorisation methods during the integration flow design or by going to the left side-bar, choosing `Credentials > REST API V2` 
+and adding there.
 
 ![alt text](https://user-images.githubusercontent.com/8449044/95571461-2f68ba80-0a31-11eb-9fff-c67b34506b00.png "REST API component OAuth2 authorisation")
 *Example above shows how to add new credential to access the API from Credentials page.*
