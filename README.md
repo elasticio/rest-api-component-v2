@@ -86,6 +86,8 @@ To create `OAuth2` credential you have to choose Auth-client or create the new o
 ![alt text](https://user-images.githubusercontent.com/8449044/95571677-7e165480-0a31-11eb-9b45-915401d40e31.png "Creating auth client for REST API component")
 *Example above shows how to add new Auth-client to access the API.*
 
+Please note that the result of creating a credential is an HTTP header automatically placed for you. You can also specify the authorisation in the headers section directly.
+
 ## Defining HTTP headers
 
 Use this section to add the request headers.
