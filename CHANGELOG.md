@@ -1,8 +1,8 @@
-## 1.0.1 (October 15, 2020)
+## 2.0.1 (October 15, 2020)
 
 Update sailor version to 2.6.17
 
-## 1.0.0 (October 8, 2020)
+## 2.0.0 (October 8, 2020)
 
 * Include status code, HTTP headers along with body in produced message
 * Update dependencies
