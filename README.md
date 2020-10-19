@@ -279,5 +279,5 @@ Possible solution - use access_type:offline in additional parameters (may not wo
 Please keep in mind that delay can influence on time of next execution. 
 For example, the flow has type `Ordinary` and scheduled to execution for every 1 minute, but the delay is set to 120 sec, so the next execution will be started only after 120 sec, instead of 1 minute.
 
-[circle-image]: https://circleci.com/gh/elasticio/rest-api-component.svg?style=svg&circle-token=2bf8e1f60133011d1fdea9505afdbabbd12b0c7b
-[circle-url]: https://circleci.com/gh/elasticio/rest-api-component
+[circle-image]: https://circleci.com/gh/elasticio/rest-api-component-v2.svg?style=svg&circle-token=11d0bd5fad61b58dc46d18e4b9ffad75143f672a
+[circle-url]: https://circleci.com/gh/elasticio/rest-api-component-v2
