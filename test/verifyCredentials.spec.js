@@ -52,7 +52,7 @@ describe('verifyCredentials test', () => {
         await verify.call(emitter, credentials);
         throw new Error('This line should never be called because await above should throw an error');
       } catch (err) {
-        expect(err.message).equal('Error: No access tokens were returned by the OAuth2 provider.');
+        expect(err.message).equal('Error: No access tokens were returned by the OAuth2 provider');
       }
     });
 

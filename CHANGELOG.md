@@ -1,6 +1,10 @@
+## 2.0.2 (October 23, 2020)
+
+* Annual audit of the component code to check if it exposes a sensitive data in the logs
+
 ## 2.0.1 (October 15, 2020)
 
-Update sailor version to 2.6.17
+* Update sailor version to 2.6.17
 
 ## 2.0.0 (October 8, 2020)
 
