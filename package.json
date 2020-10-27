@@ -11,7 +11,7 @@
         "url": "git@github.com:elasticio/rest-api-component.git"
     },
     "author": "elastic.io GmbH",
-    "license": "BSD-2-Clause",
+    "license": "Apache License 2.0",
     "engines": {
         "node": "14"
     },
