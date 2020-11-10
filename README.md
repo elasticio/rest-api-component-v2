@@ -1,4 +1,4 @@
-[![Circle CI][circle-image]][circle-url][![CLA assistant](https://cla-assistant.io/readme/badge/elasticio/rest-api-component-v2)](https://cla-assistant.io/elasticio/rest-api-component-v2)
+[![Circle CI][circle-image]][circle-url] [![CLA assistant](https://cla-assistant.io/readme/badge/elasticio/rest-api-component-v2)](https://cla-assistant.io/elasticio/rest-api-component-v2)
 
 
 
