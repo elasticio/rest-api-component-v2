@@ -270,10 +270,10 @@ If it get parse exception, it return response as is.`
 **2.** Attachments limitations:
 
 -  Maximal possible size for an attachment is 10 MB.
--  Attachments mechanism does not work with [Local Agent Installation](https://docs.elastic.io/getting-started/local-agent.html)
 
-**3.** OAuth2 authentication strategy limitation: [Access Token Response](https://www.oauth.com/oauth2-servers/access-tokens/access-token-response/) contains `refresh_token` optional property, but due to EIO platform limitation it is required.
-Possible solution - use access_type:offline in additional parameters (may not work in some cases).
+**3.** OAuth2 authentication strategy limitation: [Access Token Response](https://www.oauth.com/oauth2-servers/access-tokens/access-token-response/) should 
+always contain `refresh_token` property (optional in OAuth2 standard). Reason behind it - platform shoud be able to refresh access token after it's expiration.
+Possible solution - use `access_type:offline` in additional parameter which is supported by many OAuth2 providers.
 
 **4.** We suggest not to set Delay value more then time period between two executions of the flow.
 Please keep in mind that delay can influence on time of next execution. 
