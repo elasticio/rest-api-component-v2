@@ -18,10 +18,13 @@ This document covers the following topics:
 *   [Output](#output)
 *   [Exception handling](#exception-handling)
 *   [Known Limitations](#known-limitations)
+*   [Contributing](https://github.com/elasticio/microsoft-onedrive-component/blob/master/CONTRIBUTING.md)
+
 
 ## Introduction
 
-The example below shows the development team creation using the REST API component with our own [REST API service](https://api.elastic.io/docs "elastic.io REST API service").
+The example below shows the development team creation using the REST API component with our own 
+[REST API service](https://api.elastic.io/docs "elastic.io REST API service").
 
 ![image](https://user-images.githubusercontent.com/22715422/87129437-000fa980-c29a-11ea-920c-cc161db6cb3a.png)
 
