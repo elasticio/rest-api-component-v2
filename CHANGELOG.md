@@ -1,3 +1,8 @@
+## 2.0.4 (November 10, 2020)
+* Bump dependencies
+* Automatically & immediately retry 5 times on network failure
+* All network failures trigger rebounds when the enable rebound option is set
+
 ## 2.0.3 (November 6, 2020)
 
 * Update sailor version to 2.6.18

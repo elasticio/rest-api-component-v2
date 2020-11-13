@@ -69,6 +69,9 @@ describe('httpRequest action', () => {
 
   afterEach(() => {
     delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
+    nock.restore();
+    nock.cleanAll();
+    nock.activate();
   });
 
   describe('split result', () => {
@@ -435,11 +438,11 @@ describe('httpRequest action', () => {
     });
   });
   describe('connection error', () => {
-    it('connection error && dontThrowErrorFlg false', async () => {
+    it('connection error && dontThrowErrorFlg false  && callthrough', async () => {
       const method = 'POST';
       const msg = {
         body: {
-          url: 'http://example.com',
+          url: 'http://foo.example.com',
         },
       };
 
@@ -452,23 +455,19 @@ describe('httpRequest action', () => {
         secretId: '1234',
       };
 
-      nock(JsonataTransform.jsonataTransform(msg, { expression: cfg.reader.url }, emitter))
-        .intercept('/', method)
-        .delay(20 + Math.random() * 200)
-        .replyWithError('something awful happened');
       setNoAuthSecretStub(cfg.secretId);
       await processAction.call(emitter, msg, cfg).catch((e) => {
-        expect(e.message).to.be.eql('Error: something awful happened');
+        expect(e.message).to.be.eql('Error: getaddrinfo ENOTFOUND foo.example.com');
       });
     });
 
-    it('connection error && dontThrowErrorFlg true', async () => {
+    it('connection error && dontThrowErrorFlg true && callthrough', async () => {
       const messagesNewMessageWithBodyStub = stub(messages, 'newMessageWithBody')
         .returns(Promise.resolve());
       const method = 'POST';
       const msg = {
         body: {
-          url: 'http://example.com',
+          url: 'http://foo.example.com',
         },
       };
 
@@ -482,18 +481,14 @@ describe('httpRequest action', () => {
         secretId: '1234',
       };
 
-      nock(JsonataTransform.jsonataTransform(msg, { expression: cfg.reader.url }, emitter))
-        .intercept('/', method)
-        .delay(20 + Math.random() * 200)
-        .replyWithError('something awful happened');
       setNoAuthSecretStub(cfg.secretId);
       await processAction.call(emitter, msg, cfg).catch((e) => {
-        expect(e.message).to.be.eql('Error: something awful happened');
+        expect(e.message).to.be.eql('Error: getaddrinfo ENOTFOUND foo.example.com');
         expect(emitter.emit.withArgs('rebound').callCount).to.be.equal(1);
       });
     });
 
-    it('connection error && enableRebound true', async () => {
+    it('http error && enableRebound true', async () => {
       const method = 'POST';
       const msg = {
         body: {
@@ -521,6 +516,110 @@ describe('httpRequest action', () => {
       expect(emitter.emit.withArgs('rebound').args[0][1]).to.be.equal(
         'Code: 408 Message: HTTP error Body: Error',
       );
+    });
+
+    it('connection error && enableRebound true && mock', async () => {
+      const method = 'POST';
+      const msg = {
+        body: {
+          url: 'http://foo.example.com',
+        },
+      };
+
+      const cfg = {
+        enableRebound: true,
+        reader: {
+          url: 'url',
+          method,
+        },
+        auth: {},
+      };
+
+      for (let i = 0; i < 5; i += 1) {
+        nock(JsonataTransform.jsonataTransform(msg, { expression: cfg.reader.url }, emitter))
+          .intercept('/', method)
+          .delay(20 + Math.random() * 200)
+          .replyWithError({
+            errno: -3008,
+            code: 'ENOTFOUND',
+            syscall: 'getaddrinfo',
+            hostname: 'foo.example.com',
+            message: 'getaddrinfo ENOTFOUND foo.example.com',
+          });
+      }
+
+      setNoAuthSecretStub(cfg.secretId);
+      await processAction.call(emitter, msg, cfg);
+      expect(emitter.emit.withArgs('rebound').callCount).to.be.equal(1);
+      // eslint-disable-next-line no-unused-expressions
+      expect(nock.isDone()).to.be.true;
+    });
+
+    it('connection error and then success', async () => {
+      const method = 'POST';
+      const msg = {
+        body: {
+          url: 'http://foo.example.com',
+        },
+      };
+
+      const cfg = {
+        enableRebound: true,
+        reader: {
+          url: 'url',
+          method,
+        },
+        auth: {},
+      };
+
+      nock(JsonataTransform.jsonataTransform(msg, { expression: cfg.reader.url }, emitter))
+        .intercept('/', method)
+        .delay(20 + Math.random() * 200)
+        .replyWithError({
+          errno: -3008,
+          code: 'ENOTFOUND',
+          syscall: 'getaddrinfo',
+          hostname: 'foo.example.com',
+          message: 'getaddrinfo ENOTFOUND foo.example.com',
+        });
+      nock(JsonataTransform.jsonataTransform(msg, { expression: cfg.reader.url }, emitter))
+        .intercept('/', method)
+        .delay(20 + Math.random() * 200)
+        .reply(200, { OK: 'yes' });
+
+      setNoAuthSecretStub(cfg.secretId);
+      await processAction.call(emitter, msg, cfg);
+      expect(emitter.emit.withArgs('data').args[0][1].body.body)
+        .to.eql({ OK: 'yes' });
+      // eslint-disable-next-line no-unused-expressions
+      expect(nock.isDone()).to.be.true;
+    });
+
+    it('connection error && enableRebound true && call through', async () => {
+      const method = 'POST';
+      const msg = {
+        body: {
+          url: 'http://foo.example.com',
+        },
+      };
+
+      const cfg = {
+        enableRebound: true,
+        reader: {
+          url: 'url',
+          method,
+        },
+        auth: {},
+      };
+
+      setNoAuthSecretStub(cfg.secretId);
+      await processAction.call(emitter, msg, cfg);
+      expect(emitter.emit.withArgs('rebound').callCount).to.be.equal(1);
+      expect(emitter.emit.withArgs('rebound').args[0][1]).to.be.equal(
+        'Error: getaddrinfo ENOTFOUND foo.example.com',
+      );
+      // eslint-disable-next-line no-unused-expressions
+      expect(nock.isDone()).to.be.true;
     });
   });
 
