@@ -258,7 +258,7 @@ The messages produced by the REST API component will have the following properti
 
 ## Exception handling
 Rest API component uses exception handling logic below: 
-![Exception handling logic](https://user-images.githubusercontent.com/13310949/41960520-9bd468ca-79f8-11e8-83f4-d9b2096deb6d.png)
+![Exception handling logic](https://user-images.githubusercontent.com/5710732/99240680-1d7ef200-27fd-11eb-9b14-c9aaf7c23bb1.jpg)
 
 ## Known Limitations
 

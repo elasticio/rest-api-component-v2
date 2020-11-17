@@ -1,6 +1,6 @@
 {
     "name": "@elasticio/rest-api-component-v2",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "description": "REST API component v2",
     "scripts": {
         "pretest": "eslint lib test verifyCredentials.js --fix",
@@ -16,28 +16,28 @@
         "node": "14"
     },
     "dependencies": {
-        "@elastic.io/component-commons-library": "1.1.3",
-        "axios": "0.20.0",
+        "@elastic.io/component-commons-library": "1.1.5",
+        "axios": "0.21.0",
         "duplex": "1.0.0",
         "elasticio-node": "0.0.9",
         "elasticio-rest-node": "1.2.6",
         "elasticio-sailor-nodejs": "2.6.18",
         "request": "2.83.0",
         "request-promise": "4.2.2",
-        "uuid": "8.3.0",
+        "uuid": "8.3.1",
         "xml2js": "0.4.23",
         "xml2js-es6-promise": "1.1.1",
-        "yarn": "1.22.5"
+        "yarn": "1.22.10"
     },
     "devDependencies": {
         "@elastic.io/component-logger": "0.0.1",
         "chai": "4.2.0",
-        "eslint": "7.9.0",
-        "eslint-config-airbnb": "18.2.0",
-        "eslint-config-airbnb-base": "14.2.0",
-        "eslint-plugin-import": "2.22.0",
-        "mocha": "8.1.3",
-        "nock": "13.0.4",
-        "sinon": "9.0.3"
+        "eslint": "7.13.0",
+        "eslint-config-airbnb": "18.2.1",
+        "eslint-config-airbnb-base": "14.2.1",
+        "eslint-plugin-import": "2.22.1",
+        "mocha": "8.2.1",
+        "nock": "13.0.5",
+        "sinon": "9.2.1"
     }
 }
