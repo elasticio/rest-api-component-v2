@@ -1,6 +1,6 @@
 {
     "name": "@elasticio/rest-api-component-v2",
-    "version": "2.0.5",
+    "version": "2.0.6",
     "description": "REST API component v2",
     "scripts": {
         "pretest": "eslint lib test verifyCredentials.js --fix",
@@ -21,7 +21,7 @@
         "duplex": "1.0.0",
         "elasticio-node": "0.0.9",
         "elasticio-rest-node": "1.2.6",
-        "elasticio-sailor-nodejs": "2.6.21",
+        "elasticio-sailor-nodejs": "2.6.23",
         "request": "2.83.0",
         "request-promise": "4.2.2",
         "uuid": "8.3.1",
