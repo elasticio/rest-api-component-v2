@@ -1,4 +1,4 @@
-## 2.0.7 (January 15, 2021)
+## 2.0.7 (January 28, 2021)
 
 * Update sailor version to 2.6.24
 
