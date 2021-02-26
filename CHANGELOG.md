@@ -1,3 +1,7 @@
+## 2.0.8 (February 28, 2021)
+
+* Fix API_KEY Content-Type header processing
+
 ## 2.0.7 (January 28, 2021)
 
 * Update sailor version to 2.6.24
