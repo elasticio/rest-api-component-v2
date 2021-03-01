@@ -1,3 +1,7 @@
+## 2.0.9 (March 7, 2021)
+
+* Fix response attachments no size processing
+
 ## 2.0.8 (February 28, 2021)
 
 * Fix API_KEY Content-Type header processing
