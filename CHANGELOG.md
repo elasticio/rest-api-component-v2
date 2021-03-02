@@ -1,7 +1,7 @@
 ## 2.0.8 (March 3, 2021)
 
-* Fix bug with API_KEY Content-Type header processing
-* Fix bug component fails when the server provides a binary response without Content-Length
+* Fix bug with request Content-Type mutlipart/form-data header processing
+* Fix bug when component fails when the server provides a binary response without Content-Length
 
 ## 2.0.7 (January 28, 2021)
 
