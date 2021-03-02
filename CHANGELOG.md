@@ -1,10 +1,7 @@
-## 2.0.9 (March 7, 2021)
+## 2.0.8 (March 3, 2021)
 
-* Fix response attachments no size processing
-
-## 2.0.8 (February 28, 2021)
-
-* Fix API_KEY Content-Type header processing
+* Fix bug with API_KEY Content-Type header processing
+* Fix bug component fails when the server provides a binary response without Content-Length
 
 ## 2.0.7 (January 28, 2021)
 
