@@ -56,16 +56,12 @@ describe('verifyCredentials test', () => {
       }
     });
 
-    it('should fail if auth.oauth2.keys.refresh_token is missing', async () => {
+    it('should succeed if auth.oauth2.keys.refresh_token is missing', async () => {
       credentials.auth.oauth2.keys = {
         access_token: 'access_token',
       };
-      try {
-        await verify.call(emitter, credentials);
-        throw new Error('This line should never be called because await above should throw an error');
-      } catch (err) {
-        expect(err.message).equal('Error: No refresh tokens were returned by the OAuth2 provider. Try to add access_type:offline as an additional parameter');
-      }
+      const result = await verify.call(emitter, credentials);
+      expect(result).equal(true);
     });
   });
 });
