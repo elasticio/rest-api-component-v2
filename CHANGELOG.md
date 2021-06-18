@@ -1,3 +1,7 @@
+## 2.0.9 (June 25, 2021)
+
+Fix OAuth2 authentication strategy limitation: `refresh_token` property is now optional for Access Token Response (also optional in OAuth2 standard)
+
 ## 2.0.8 (March 3, 2021)
 
 * Fix bug with request Content-Type mutlipart/form-data header processing

@@ -276,11 +276,7 @@ If it get parse exception, it return response as is.`
 
 -  Maximal possible size for an attachment is 10 MB.
 
-**3.** OAuth2 authentication strategy limitation: [Access Token Response](https://www.oauth.com/oauth2-servers/access-tokens/access-token-response/) should 
-always contain `refresh_token` property (optional in OAuth2 standard). Reason behind it - platform shoud be able to refresh access token after it's expiration.
-Possible solution - use `access_type:offline` in additional parameter which is supported by many OAuth2 providers.
-
-**4.** We suggest not to set Delay value more then time period between two executions of the flow.
+**3.** We suggest not to set Delay value more then time period between two executions of the flow.
 Please keep in mind that delay can influence on time of next execution. 
 For example, the flow has type `Ordinary` and scheduled to execution for every 1 minute, but the delay is set to 120 sec, so the next execution will be started only after 120 sec, instead of 1 minute.
 
