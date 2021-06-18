@@ -1,6 +1,6 @@
-## 2.0.9 (June 11, 2021)
+## 2.0.9 (June 25, 2021)
 
-* Delete OAuth2 authentication strategy limitation: currently, Access Token Response shouldn't always contain `refresh_token` property (optional in OAuth2 standard).
+Fix OAuth2 authentication strategy limitation: `refresh_token` property is now optional for Access Token Response (also optional in OAuth2 standard)
 
 ## 2.0.8 (March 3, 2021)
 
