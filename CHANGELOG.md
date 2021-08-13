@@ -1,3 +1,7 @@
+## 2.0.10 (August 13, 2021)
+
+* Fix bug with response charset `utf-16le`
+
 ## 2.0.9 (June 25, 2021)
 
 Fix OAuth2 authentication strategy limitation: `refresh_token` property is now optional for Access Token Response (also optional in OAuth2 standard)
