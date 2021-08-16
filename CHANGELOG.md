@@ -1,4 +1,4 @@
-## 2.0.10 (August 13, 2021)
+## 2.0.10 (August 20, 2021)
 
 * Fix bug with response charset `utf-16le`
 
