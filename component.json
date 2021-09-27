@@ -4,7 +4,7 @@
   "buildType": "docker",
   "authClientTypes": ["oauth2", "basic", "api_key", "noauth"],
   "docsUrl": "https://github.com/elasticio/rest-api-component",
-  "version": "2.0.10-dev1",
+  "version": "2.0.11-dev1",
   "credentials": {
     "fields": {
       "auth": {
