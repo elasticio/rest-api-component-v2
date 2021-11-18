@@ -1424,10 +1424,10 @@ describe('httpRequest action', () => {
       expect(emitter.emit.args[0][1].body).to.deep.eql({
         statusCode: 200,
         statusMessage: null,
-        headers: { 'content-type': 'image/png', 'content-length': '22421' },
+        headers: { 'content-type': 'image/png', 'content-length': '3799' },
         attachments: {
           'content-type': 'image/png',
-          size: '22421',
+          size: '3799',
           sourceUrl: 'https://example.com/image.png',
           url: 'http://example.com/getUrl',
         },
