@@ -1,3 +1,8 @@
+## 2.0.11 (November 26, 2021)
+
+* Updated the sailor version to 2.6.26
+* Reduced the size of component icon file
+
 ## 2.0.10 (August 20, 2021)
 
 * Fix bug with response charset `utf-16le`
