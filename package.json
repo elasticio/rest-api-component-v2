@@ -15,13 +15,12 @@
         "node": "14"
     },
     "dependencies": {
-        "@elastic.io/component-commons-library": "1.1.5",
-        "axios": "0.21.0",
+        "@elastic.io/component-commons-library": "2.0.1-dev.13",
+        "axios": "0.26.1",
         "duplex": "1.0.0",
         "elasticio-node": "0.0.9",
-        "elasticio-rest-node": "1.2.6",
-        "elasticio-sailor-nodejs": "2.6.26",
-        "request": "2.83.0",
+        "elasticio-rest-node": "1.2.7",
+        "elasticio-sailor-nodejs": "2.6.27",
         "request-promise": "4.2.2",
         "uuid": "8.3.1",
         "xml2js": "0.4.23",
@@ -37,6 +36,7 @@
         "eslint-plugin-import": "2.22.1",
         "mocha": "8.2.1",
         "nock": "13.0.5",
-        "sinon": "9.2.1"
+        "sinon": "9.2.1",
+        "request": "2.88.2"
     }
 }
