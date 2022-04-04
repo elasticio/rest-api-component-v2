@@ -1,3 +1,7 @@
+## 2.0.12 (April 08, 2022)
+
+* Updated the sailor version to 2.6.27
+
 ## 2.0.11 (November 26, 2021)
 
 * Updated the sailor version to 2.6.26

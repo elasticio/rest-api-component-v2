@@ -1,6 +1,6 @@
 {
   "title": "REST API V2",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "A generic connector for accessing HTTP and REST APIs .",
   "authClientTypes": [
     "oauth2",
