@@ -1,6 +1,8 @@
 ## 2.0.12 (April 08, 2022)
 
-* Updated the sailor version to 2.6.27
+* Update Sailor version to 2.6.27
+* Get rid of vulnerabilities in dependencies
+* Add component pusher job to Circle.ci config
 
 ## 2.0.11 (November 26, 2021)
 
