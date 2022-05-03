@@ -1,9 +1,12 @@
 {
   "title": "REST API V2",
-  "version": "2.0.11",
   "description": "A generic connector for accessing HTTP and REST APIs .",
-  "buildType": "docker",
-  "authClientTypes": ["oauth2", "basic", "api_key", "noauth"],
+  "authClientTypes": [
+    "oauth2",
+    "basic",
+    "api_key",
+    "noauth"
+  ],
   "docsUrl": "https://github.com/elasticio/rest-api-component",
   "credentials": {
     "fields": {
