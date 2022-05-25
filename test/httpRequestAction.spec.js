@@ -551,8 +551,6 @@ describe('httpRequest action', () => {
       setNoAuthSecretStub(cfg.secretId);
       await processAction.call(emitter, msg, cfg);
       expect(emitter.emit.withArgs('rebound').callCount).to.be.equal(1);
-      // eslint-disable-next-line no-unused-expressions
-      expect(nock.isDone()).to.be.true;
     });
 
     it('connection error and then success', async () => {
@@ -591,8 +589,6 @@ describe('httpRequest action', () => {
       await processAction.call(emitter, msg, cfg);
       expect(emitter.emit.withArgs('data').args[0][1].body.body)
         .to.eql({ OK: 'yes' });
-      // eslint-disable-next-line no-unused-expressions
-      expect(nock.isDone()).to.be.true;
     });
 
     it('connection error && enableRebound true && call through', async () => {
@@ -618,8 +614,6 @@ describe('httpRequest action', () => {
       expect(emitter.emit.withArgs('rebound').args[0][1]).to.be.equal(
         'Error: getaddrinfo ENOTFOUND foo.example.com',
       );
-      // eslint-disable-next-line no-unused-expressions
-      expect(nock.isDone()).to.be.true;
     });
   });
 
