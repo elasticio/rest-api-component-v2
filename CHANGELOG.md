@@ -1,3 +1,6 @@
+## 2.0.13 (May 26, 2022)
+* Made secrets only load once per container lifetime 
+
 ## 2.0.12 (April 08, 2022)
 
 * Update Sailor version to 2.6.27
