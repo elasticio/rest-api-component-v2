@@ -1,3 +1,6 @@
+## 2.0.14 (September 23, 2022)
+* Updated the sailor version to 2.6.29
+
 ## 2.0.13 (May 26, 2022)
 * Made secrets only load once per container lifetime (per token expiration time in case of OAUTH2)
 
