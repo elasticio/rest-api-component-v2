@@ -12,7 +12,7 @@
     "author": "elastic.io GmbH",
     "license": "Apache License 2.0",
     "engines": {
-        "node": "16.x"
+        "node": "14"
     },
     "dependencies": {
         "@elastic.io/component-commons-library": "2.0.2",
