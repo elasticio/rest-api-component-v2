@@ -28,8 +28,11 @@ The image below illustrates the configuration of the component.
 ![Configuration of the component](https://github.com/elasticio/rest-api-component-v2/assets/8449044/727ceb4b-7e47-4c4a-a758-2ad6871cf5d4)
 
 Numbers show:
+
 1 - Method of the REST API resource
+
 2 - URL of the REST API resource
+
 3 - HTTP headers
 
 And here are the remaining configuration options (see details below):
