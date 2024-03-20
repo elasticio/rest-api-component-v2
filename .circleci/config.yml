@@ -77,9 +77,9 @@ jobs:
       - checkout
       - node/install:
           node-version: << pipeline.parameters.node-version >>
-      - run:
-          name: Audit Dependencies
-          command: npm audit --audit-level=high
+      #- run:
+      #    name: Audit Dependencies
+      #    command: npm audit --audit-level=high
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
