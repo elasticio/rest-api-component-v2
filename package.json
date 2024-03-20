@@ -15,12 +15,12 @@
         "node": "18"
     },
     "dependencies": {
-        "@elastic.io/component-commons-library": "2.0.2",
-        "axios": "0.26.1",
+        "@elastic.io/component-commons-library": "^3.2.0-dev.6",
+        "axios": "0.28.0",
         "duplex": "1.0.0",
         "elasticio-node": "0.0.9",
         "elasticio-rest-node": "1.2.7",
-        "elasticio-sailor-nodejs": "2.7.1",
+        "elasticio-sailor-nodejs": "^2.7.2-dev.3",
         "request-promise": "4.2.2",
         "uuid": "8.3.1",
         "xml2js": "0.4.23",
