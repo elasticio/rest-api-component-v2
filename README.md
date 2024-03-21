@@ -13,7 +13,6 @@ This document covers the following topics:
 *   [Defining HTTP headers](#defining-http-headers)
 *   [Defining request body](#defining-request-body)
 *   [Working with Cookies](#cookies)
-*   [HTTP Headers](#http-headers)
 *   [Attachments](#attachments)
 *   [Output](#output)
 *   [Exception handling](#exception-handling)
@@ -174,7 +173,7 @@ In case of `application/x-www-form-urlencoded` content type add the necessary pa
 
 ![REST API component Body sending a simple form](https://github.com/elasticio/rest-api-component-v2/assets/8449044/fb41f284-0219-41c9-bc88-b0abb3a09033)
 
-Please note that parameter value fields support [JSONata](http://jsonata.org) expressions.
+Please note that parameter value fields support JSONata expressions.
 
 This HTTP request would submit `key1=value1&key2=value2` in the message body.
 
@@ -224,12 +223,12 @@ for more information please see the
 
 You can to get HTTP response header only if ``Don`t throw Error on Failed Calls`` option is checked.
 In this case output structure of component will be: 
-```js
-    {
-      headers:<HTTP headers>,
-      body:<HTTP response body>,
-      statusCode:<HTTP response status code>
-      statusMessage:<HTTP response status message>
+```json
+{
+  "headers": <HTTP headers>,
+  "body": <HTTP response body>,
+  "statusCode": <HTTP response status code>
+  "statusMessage": <HTTP response status message>
     }
 ```
 

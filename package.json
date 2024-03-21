@@ -2,6 +2,7 @@
     "name": "@elasticio/rest-api-component-v2",
     "description": "REST API component v2",
     "scripts": {
+        "audit": "better-npm-audit audit --level high --production",
         "pretest": "eslint lib test verifyCredentials.js --fix",
         "test": "mocha test/**/*.spec.js --timeout 10000"
     },
@@ -15,12 +16,12 @@
         "node": "18"
     },
     "dependencies": {
-        "@elastic.io/component-commons-library": "^3.2.0-dev.6",
+        "@elastic.io/component-commons-library": "3.2.0-dev.6",
         "axios": "0.28.0",
         "duplex": "1.0.0",
         "elasticio-node": "0.0.9",
         "elasticio-rest-node": "1.2.7",
-        "elasticio-sailor-nodejs": "^2.7.2-dev.3",
+        "elasticio-sailor-nodejs": "2.7.2-dev.3",
         "request-promise": "4.2.2",
         "uuid": "8.3.1",
         "xml2js": "0.4.23",
@@ -28,6 +29,7 @@
     },
     "devDependencies": {
         "@elastic.io/component-logger": "0.0.1",
+        "better-npm-audit": "3.7.3",
         "chai": "4.2.0",
         "eslint": "7.13.0",
         "eslint-config-airbnb": "18.2.1",
