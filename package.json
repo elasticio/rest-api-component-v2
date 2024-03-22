@@ -2,6 +2,7 @@
     "name": "@elasticio/rest-api-component-v2",
     "description": "REST API component v2",
     "scripts": {
+        "audit": "better-npm-audit audit --level high --production",
         "pretest": "eslint lib test verifyCredentials.js --fix",
         "test": "mocha test/**/*.spec.js --timeout 10000"
     },
@@ -12,31 +13,31 @@
     "author": "elastic.io GmbH",
     "license": "Apache License 2.0",
     "engines": {
-        "node": "14"
+        "node": "18"
     },
     "dependencies": {
-        "@elastic.io/component-commons-library": "2.0.2",
-        "axios": "0.26.1",
+        "@elastic.io/component-commons-library": "3.2.0",
+        "axios": "0.28.0",
         "duplex": "1.0.0",
         "elasticio-node": "0.0.9",
         "elasticio-rest-node": "1.2.7",
-        "elasticio-sailor-nodejs": "2.6.29",
+        "elasticio-sailor-nodejs": "2.7.2",
         "request-promise": "4.2.2",
         "uuid": "8.3.1",
         "xml2js": "0.4.23",
-        "xml2js-es6-promise": "1.1.1",
-        "yarn": "1.22.10"
+        "xml2js-es6-promise": "1.1.1"
     },
     "devDependencies": {
         "@elastic.io/component-logger": "0.0.1",
+        "better-npm-audit": "3.7.3",
         "chai": "4.2.0",
         "eslint": "7.13.0",
         "eslint-config-airbnb": "18.2.1",
         "eslint-config-airbnb-base": "14.2.1",
         "eslint-plugin-import": "2.22.1",
-        "mocha": "9.2.2",
-        "nock": "13.0.5",
-        "sinon": "9.2.1",
+        "mocha": "10.3.0",
+        "nock": "13.5.3",
+        "sinon": "17.0.1",
         "request": "2.88.2"
     }
 }
