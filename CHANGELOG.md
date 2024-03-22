@@ -1,5 +1,5 @@
-## 2.0.15 (February 23, 2024)
-* Updated the Sailor version to 2.7.1
+## 2.0.15 (March 22, 2024)
+* Updated the Sailor version to 2.7.2
 * Set the Node engine to 18.x
 * Minor dev libraries update
 * Made the images in the Readme up to date
