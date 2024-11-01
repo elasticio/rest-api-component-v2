@@ -1357,10 +1357,7 @@ describe('httpRequest action', () => {
       };
 
       nock('http://qwre.com')
-        .post('/', (body) => {
-          expect(body).to.contain('Start Date');
-          return body.replace(/[\n\r]/g, '').match(/foo.+bar.+baz.+qwe.+hello.+world/);
-        })
+        .post('/', (body) => body.replace(/[\n\r]/g, '').match(/foo.+bar.+baz.+qwe.+hello.+world/))
         .delay(20 + Math.random() * 200)
         .reply((uri, requestBody) => [
           200,

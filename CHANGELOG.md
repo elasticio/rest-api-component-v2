@@ -1,5 +1,11 @@
+## 2.0.15 (March 22, 2024)
+* Updated the Sailor version to 2.7.2
+* Set the Node engine to 18.x
+* Minor dev libraries update
+* Made the images in the Readme up to date
+
 ## 2.0.14 (September 14, 2022)
-* Updated the sailor version to 2.6.29
+* Updated the Sailor version to 2.6.29
 
 ## 2.0.13 (May 26, 2022)
 * Made secrets only load once per container lifetime (per token expiration time in case of OAUTH2)
