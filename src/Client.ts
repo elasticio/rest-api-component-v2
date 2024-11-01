@@ -15,8 +15,8 @@ import {
 const DEFAULT_TIME_OUT = 60 * 1000; // 1min
 const MAX_TIME_OUT = 19 * 60 * 1000; // 19min
 const MAX_REDIRECTS = 10;
-const MAX_CONTENT_LENGTH = 20 * 1024 * 1024; // 20MB
-const MAX_FILE_LENGTH = 100 * 1024 * 1024; // 100MB
+const MAX_CONTENT_LENGTH = process.env.MAX_CONTENT_LENGTH ? Number(process.env.MAX_CONTENT_LENGTH) : 20 * 1024 * 1024; // 20MB
+const MAX_FILE_LENGTH = process.env.MAX_FILE_LENGTH ? Number(process.env.MAX_FILE_LENGTH) : 100 * 1024 * 1024; // 100MB
 const MAX_RETRIES = 10;
 const MAX_DELAY = 19 * 60 * 1000; // 19min
 
@@ -27,7 +27,7 @@ export default class Client {
 
   private secret: Secret;
 
-  private ax: AxiosInstance;
+  ax: AxiosInstance;
 
   private lastRequest: number;
 
@@ -98,9 +98,6 @@ export default class Client {
       this.logger.debug('Secret got successfully');
     }
 
-    let response;
-    let error;
-    let currentRetry = 0;
     const { errorPolicy, maxRetries, delay } = this.cfg;
     checkNumField('Maximum retries', maxRetries, 0, MAX_RETRIES);
     checkNumField('Delay in ms', delay, 0, MAX_DELAY);
@@ -116,7 +113,10 @@ export default class Client {
 
     const maximumRetries = maxRetries ? Number(maxRetries) : MAX_RETRIES;
 
-    while (currentRetry <= maximumRetries) {
+    let response;
+    let errMsg;
+    let currentRetry = 0;
+    while (currentRetry < maximumRetries) {
       this.lastRequest = Date.now();
       try {
         const opts = await this.getOptions();
@@ -124,8 +124,7 @@ export default class Client {
         response = await this.ax(opts);
         return response;
       } catch (err) {
-        error = err;
-        const errMsg = err.response ? commons.getErrMsg(err.response) : `Got error "${err.message}"${err.code ? ` (code - ${err.code})` : ''}`;
+        errMsg = err.response ? commons.getErrMsg(err.response) : `Got error "${err.message}"${err.code ? ` (code - ${err.code})` : ''}`;
         this.logger.error(errMsg);
         if (err.response?.status === 401 && this.secret.type === 'oauth2') {
           this.logger.debug('Token invalid, going to fetch new one');
@@ -137,11 +136,11 @@ export default class Client {
           }
           this.logger.debug('Trying to use new token');
         } else if (this.checkIfErrorCodeInErrorRange(err.response?.status) || err.code === 'ECONNABORTED') {
-          if (errorPolicy === 'throwError') throw err;
+          if (errorPolicy === 'throwError') throw new Error(errMsg);
           if (errorPolicy === 'emit') return err.response;
           if (errorPolicy === 'rebound') return 'rebound';
-          const retryAfter = err.response.headers['retry-after'] || 2 ** (currentRetry + 1);
-          this.logger.error(`Going to retry after ${retryAfter}sec (${currentRetry + 1} of ${maxRetries})`);
+          const retryAfter = err.response?.headers?.['retry-after'] || 2 ** (currentRetry + 1);
+          this.logger.error(`Going to retry after ${retryAfter}sec (${currentRetry + 1} of ${maximumRetries})`);
           await commons.sleep(retryAfter * 1000);
         } else {
           throw err;
@@ -149,7 +148,7 @@ export default class Client {
       }
       currentRetry++;
     }
-    throw error;
+    throw new Error(errMsg);
   }
 
   checkIfErrorCodeInErrorRange(code?: number): boolean {
@@ -163,18 +162,18 @@ export default class Client {
     const result = [];
     const { errorCodes } = this.cfg;
     if (!errorCodes) return result;
-    for (const codeOrRange of errorCodes.split(',').map((codeOrRange) => codeOrRange.trim())) {
+    for (const codeOrRange of errorCodes.split(',').map((_codeOrRange) => _codeOrRange.trim())) {
       if (/\D+/.test(codeOrRange)) {
         const range = codeOrRange.split('-');
-        if (range.length !== 2) throw new Error(`Invalid code or range - "${codeOrRange}" in "Error codes" field`)
-        range.forEach((code) => { if (commons.isNumberNaN(code)) throw new Error(`Invalid code "${code}" in range - "${codeOrRange}" in "Error codes" field`) });
+        if (range.length !== 2) throw new Error(`Invalid code or range - "${codeOrRange}" in "Error codes" field`);
+        range.forEach((code) => { if (commons.isNumberNaN(code)) throw new Error(`Invalid code "${code}" in range - "${codeOrRange}" in "Error codes" field`); });
         const [start, end] = range.map(Number);
-        if (start > end) throw new Error(`Invalid range - "${codeOrRange}", first code should be less than second in "Error codes" field`)
+        if (start > end) throw new Error(`Invalid range - "${codeOrRange}", first code should be less than second in "Error codes" field`);
         for (let i = start; i <= end; i++) {
           result.push(i);
         }
       } else {
-        result.push(Number(codeOrRange))
+        result.push(Number(codeOrRange));
       }
     }
     return result;
@@ -183,19 +182,20 @@ export default class Client {
   async getOptions(): Promise<AxiosRequestConfig<any>> {
     const { url, body, headers, method } = this.cfg.reader;
     const { uploadFile } = this.cfg;
-    const transform = (expression) => commons.JsonataTransform.jsonataTransform(this.msg, { expression }, this.context)
+    const transform = (expression) => commons.JsonataTransform.jsonataTransform(this.msg, { expression }, this.context);
 
     const opts: AxiosRequestConfig = {
       method,
       url: transform(url),
       headers: {}
-    }
+    };
 
     if (headers && headers.length > 0) {
       for (const header of headers) {
-        opts.headers[header.key] = transform(header.value)
+        opts.headers[header.key] = transform(header.value);
       }
     }
+    if (!body) return opts;
 
     if (body.contentType.toLowerCase() === 'application/x-www-form-urlencoded') {
       const { urlencoded } = body;
@@ -203,7 +203,7 @@ export default class Client {
         const params = new URLSearchParams();
         for (const pair of urlencoded) {
           const parsedValue = transform(pair.value);
-          params.append(pair.key, typeof parsedValue === 'object' ? JSON.stringify(parsedValue) : parsedValue)
+          params.append(pair.key, typeof parsedValue === 'object' ? JSON.stringify(parsedValue) : parsedValue);
         }
         opts.params = params;
       }
@@ -214,33 +214,33 @@ export default class Client {
         for (const pair of formData) {
           const transformedValue = transform(pair.value);
           let valueToSend = transformedValue;
-          const { url, knownLength, filename } = transformedValue
-          if (uploadFile && url) {
+          const { url: urlToFile, knownLength, filename } = transformedValue;
+          if (uploadFile && urlToFile) {
             const formDataOpts: AppendOptions = {};
-            if (url) {
-              const { data, headers } = await getAttachmentStream(url, this.msg.id, this.logger);
-              formDataOpts.knownLength = knownLength || headers['content-length'];
+            if (urlToFile) {
+              const { data, headers: fileStreamHeaders } = await getAttachmentStream(urlToFile, this.msg.id, this.logger);
+              formDataOpts.knownLength = knownLength || fileStreamHeaders['content-length'];
               valueToSend = data;
             }
             if (filename) formDataOpts.filename = filename;
-            form.append(pair.key, valueToSend, formDataOpts)
+            form.append(pair.key, valueToSend, formDataOpts);
           } else {
-            form.append(pair.key, valueToSend)
+            form.append(pair.key, valueToSend);
           }
         }
         opts.data = form;
         opts.headers = {
           ...opts.headers,
           ...form.getHeaders()
-        }
+        };
         if (form.hasKnownLength()) opts.headers['content-length'] = form.getLengthSync();
       }
     } else if (body.contentType.toLowerCase() === 'application/octet-stream' && uploadFile) {
-      const url = transform(body.raw)
-      const { data } = await getAttachmentStream(url, this.msg.id, this.logger);
+      const urlToFile = transform(body.raw);
+      const { data } = await getAttachmentStream(urlToFile, this.msg.id, this.logger);
       opts.data = data;
     } else if (body.raw) {
-      opts.data = transform(body.raw)
+      opts.data = transform(body.raw);
     }
 
     return opts;
@@ -262,17 +262,21 @@ export default class Client {
   addAuthentication(opts: AxiosRequestConfig) {
     const secretType = this.secret.type;
     if (secretType === 'basic') {
+      const { username, password } = this.secret.credentials;
+      if (!username || !password) throw new Error('"Username" or "Password" is missing in the credentials section');
       opts.auth = {
-        username: this.secret.credentials.username,
-        password: process.env.ELASTICIO_API_KEY,
+        username,
+        password,
       };
     }
     if (secretType === 'api_key') {
+      const { headerName, headerValue } = this.secret.credentials;
+      if (!headerName || !headerValue) throw new Error('"Header Name" or "Header Value" is missing in the credentials section');
       opts = {
         ...opts,
         headers: {
           ...opts.headers || {},
-          [this.secret.credentials.headerName]: this.secret.credentials.headerValue,
+          [headerName]: headerValue,
         }
       };
     }

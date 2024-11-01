@@ -3,7 +3,7 @@
     "description": "REST API component v2",
     "scripts": {
         "pretest": "eslint --ext .ts --quiet --fix && find src -name \"*.js\" -type f -delete",
-        "test": "LOG_OUTPUT_MODE='short' node --import tsx --test ./spec/*/*test.ts",
+        "test": "LOG_OUTPUT_MODE='short' node --import tsx --test ./spec/*/*test.ts ./spec/*test.ts",
         "posttest": "tsc"
     },
     "repository": {
@@ -21,7 +21,7 @@
         "duplex": "1.0.0",
         "elasticio-node": "0.0.9",
         "elasticio-rest-node": "1.2.7",
-        "elasticio-sailor-nodejs": "2.7.3",
+        "elasticio-sailor-nodejs": "2.7.4-dev.1",
         "form-data": "4.0.1",
         "request-promise": "4.2.2",
         "uuid": "8.3.1",

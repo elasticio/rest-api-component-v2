@@ -38,13 +38,11 @@ export const getUserAgent = () => {
   return `${compName}/${compVersion} maester-client/${maesterClientVersion}`;
 };
 
-
 export const checkNumField = (name, value, minValue, maxValue) => {
   if (value && (commons.isNumberNaN(value) || Number(value) < minValue || Number(value) > maxValue)) {
     throw new Error(`"${name}" must be valid number between ${minValue} and ${maxValue}`);
   }
 };
-
 
 export const isMaesterUrl = (url: string) => /=maester$/.test(url);
 
@@ -95,15 +93,21 @@ export interface Reader {
 }
 
 export interface Body {
-  raw: string
-  formData: FormData[]
-  urlencoded: Urlencoded[]
-  contentType: string
+  raw?: string
+  formData?: FormData[]
+  urlencoded?: Urlencoded[]
+  contentType?: string
 }
 
 export interface FormData {
   key: string
-  value: string
+  value: string | FormDataUploadValue
+}
+
+export interface FormDataUploadValue {
+  url: string
+  knownLength?: number
+  filename?: string
 }
 
 export interface Urlencoded {
@@ -153,4 +157,3 @@ export interface SecretApiKey extends SecretBase { type: 'api_key'; credentials:
 export type Secret = SecretBasic | SecretOAuth | SecretNoAuth | SecretApiKey;
 
 export interface Fields { }
-

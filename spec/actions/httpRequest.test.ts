@@ -1,6 +1,5 @@
 import assert from 'assert/strict';
 import * as commons from '@elastic.io/component-commons-library';
-import axios, { AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults, AxiosInstance } from 'axios';
 import { describe, it, beforeEach, mock, afterEach } from 'node:test';
 import { getContext } from '../common';
 import Client from '../../src/Client';
