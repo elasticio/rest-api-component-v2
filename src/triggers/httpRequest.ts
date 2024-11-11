@@ -10,7 +10,7 @@ let client: Client;
 const TMP_DATA_PATH = '/tmp/data';
 
 export async function processAction(msg: any = {}, cfg: Cfg) {
-  this.logger.info('"HTTP request (axios)" trigger started');
+  this.logger.info('"HTTP Request (Axios Library)" trigger started');
 
   msg.body ||= {};
   client ||= new Client(this, cfg);
