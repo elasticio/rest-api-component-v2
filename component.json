@@ -1,6 +1,6 @@
 {
   "title": "REST API V2",
-  "version": "2.1.0-dev.6",
+  "version": "2.1.0-dev.7",
   "description": "A generic connector for accessing HTTP and REST APIs .",
   "authClientTypes": [
     "oauth2",
@@ -19,10 +19,10 @@
   },
   "triggers": {
     "httpRequestAxiosTrigger": {
-      "main": "./src/actions/httpRequest.js",
-      "title": "HTTP request (axios lib)",
+      "main": "./src/triggers/httpRequest.js",
+      "title": "HTTP Request (Axios Library)",
       "help": {
-        "description": "Will send a GET/POST/PUT/DELETE HTTP request and parse the response back to the flow",
+        "description": "Sends a GET, POST, PUT, or DELETE HTTP request and parses the response back to the flow.",
         "link": "/components/rest-api/index.html#http-request-axios"
       },
       "metadata": {
@@ -36,7 +36,7 @@
           "order": 95
         },
         "errorPolicy": {
-          "label": "Error handling policy",
+          "label": "Error Handling Policy",
           "viewClass": "SelectView",
           "placeholder": "Retry by component",
           "model": {
@@ -51,52 +51,52 @@
           "order": 90
         },
         "maxRetries": {
-          "label": "Maximum retries",
+          "label": "Maximum Retries",
           "placeholder": "10",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Set maximum retries attempts. This option works only when <b>Error handling policy</b> set as <b><i>Retry by component</i></b>. Default and maximum value - 10"
+            "description": "Set the maximum number of retry attempts. This option works only when <b>Error Handling Policy</b> is set to <b><i>Retry by component</i></b>. Default and maximum value is 10."
           },
           "order": 85
         },
         "errorCodes": {
-          "label": "Error codes",
+          "label": "Error Codes",
           "placeholder": "408, 423, 429, 500-599",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "A comma-separated list of codes or ranges. By default, the error handling policy is applied when you receive HTTP codes 408, 423, 429, and any codes greater than 500. However, you can override these codes using this field.<br><br>You can put here exactly codes:<br><b>401, 404, 503</b><br><br>Or you can use ranges:<br><b>400-401, 405-410, 502-509</b><br><br>Or combination of them:<br><b>403, 404, 500-599</b><br><br><br>Note: You can use only codes above 299 here, also not equal 401 if selected OAuth2 authentication"
+            "description": "A comma-separated list of codes or ranges. By default, the error handling policy is applied when you receive HTTP codes 408, 423, 429, and any codes from 500 onwards. You can override these default codes using this field.<br><br>Examples of valid entries:<br><b>Exact codes:</b> <br>401, 404, 503<br><br><b>Ranges:</b><br>400-401, 405-410, 502-509<br><br><b>Combinations:</b><br>403, 404, 500-599<br><br><b>Note:</b> You can only use codes above 299 here, and you cannot use code 401 if OAuth2 authentication is selected."
           },
           "order": 80
         },
         "downloadAsAttachment": {
-          "label": "Download as attachment",
+          "label": "Download as Attachment",
           "viewClass": "CheckBoxView",
           "help": {
-            "description": "If checked, component will download response data to internal storage as attachment"
+            "description": "If checked, the component will download response data to internal storage as an attachment."
           },
           "order": 75
         },
         "uploadFile": {
-          "label": "Upload file",
+          "label": "Upload File",
           "viewClass": "CheckBoxView",
           "help": {
-            "description": "If checked, you will be able to upload data. There are two options available: <br><br>1. Body content type <b>application/octet-stream</b> - in this case put your url to the file from internal or external storage directly to the \"Body\" field as a string<br><br>2. Body content type <b>multipart/form-data</b> - to use it, put an any key as a string, for example - \"file\" and value as an object (switch this field to \"JSONata Mode\"), where one of the object keys should be \"url\" with a link to the file.<br>Available parameters is this case:<br><b>* url</b> (string, required) - link to the file from internal or external storage<br><b>* filename</b> (string, optional) - name of the file<br><b>* knownLength</b> (number, optional) - size of the file.<br>Example of ready object:<div style=\"background-color:#E7E8EB;\">{<div style=\"margin-left:1em;\"><span style=\"color:#1d75b3;\">\"url\":</span> <span style=\"color:#b35e14;\">\"https://example.com/pic.jpg\"</span>,<br><span style=\"color:#1d75b3;\">\"filename\":</span> <span style=\"color:#b35e14;\">\"pic.jpg\"</span>,<br><span style=\"color:#1d75b3;\">\"knownLength\":</span> <span style=\"color:#75438a;\">15201</span></div>}</div>"
+            "description": "If checked, you will be able to upload data. Two options are available:<br><br>1. For body content type <b>application/octet-stream</b>, place the URL of the file from internal or external storage directly in the \"Body\" field as a string.<br><br>2. For body content type <b>multipart/form-data</b>, use any key as a string (e.g., \"file\") and the value as an object (switch this field to \"JSONata Mode\"). One of the object keys must be \"url\" with a link to the file.<br><br>Available parameters:<br><b>* url</b> (string, required) - link to the file from internal or external storage.<br><b>* filename</b> (string, optional) - name of the file.<br><b>* knownLength</b> (number, optional) - size of the file.<br><br>Example of a valid object:<div style=\"background-color:#E7E8EB;\">{<div style=\"margin-left:1em;\"><span style=\"color:#1d75b3;\">\"url\":</span> <span style=\"color:#b35e14;\">\"https://example.com/pic.jpg\"</span>,<br><span style=\"color:#1d75b3;\">\"filename\":</span> <span style=\"color:#b35e14;\">\"pic.jpg\"</span>,<br><span style=\"color:#1d75b3;\">\"knownLength\":</span> <span style=\"color:#75438a;\">15201</span></div>}</div>"
           },
           "order": 70
         },
         "noStrictSSL": {
-          "label": "Do not verify SSL certificate (unsafe)",
+          "label": "Do Not Verify SSL Certificate (Unsafe)",
           "viewClass": "CheckBoxView",
           "help": {
-            "description": "Unsafe option! Check it if you want to disable SSL certificate verification on the server"
+            "description": "Warning: This is an unsafe option! Check this box if you want to disable SSL certificate verification on the server."
           },
           "order": 65
         },
         "maxRedirects": {
-          "label": "Maximum redirects",
+          "label": "Maximum Redirects",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Defines the maximum number of redirects to follow. If set to 0, no redirects will be followed"
+            "description": "Defines the maximum number of redirects to follow. If set to 0, no redirects will be followed."
           },
           "order": 60
         },
@@ -104,40 +104,40 @@
           "label": "Delay in ms",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Delay calling the next request after the previous request. Max delay 1140000 (19min), default 0"
+            "description": "Delay the next request after the previous request. Maximum delay is 1,140,000 ms (19 minutes); default is 0."
           },
           "order": 55
         },
         "requestTimeoutPeriod": {
-          "label": "Request timeout",
+          "label": "Request Timeout",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Timeout period in milliseconds while component waiting for server response, should be positive integer (1-1140000), defaults to 100000 (100 sec)"
+            "description": "Timeout period in milliseconds while the component waits for a server response. Should be a positive integer (1-1,140,000); defaults to 100,000 ms (100 seconds)."
           },
           "order": 50
         },
         "maxContentLength": {
-          "label": "Response size limit",
+          "label": "Response Size Limit",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Maximum response size in bytes, maximum and default 20MB - for regular requests and 100MB - for attachments (if checked <b>Download as attachment</b>)"
+            "description": "Maximum response size in bytes; maximum and default is 20MB for regular requests and 100MB for attachments (if <b>Download as Attachment</b> is checked)."
           },
           "order": 45
         },
         "maxBodyLength": {
-          "label": "Request size limit",
+          "label": "Request Size Limit",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Maximum size of the http request content in bytes, unlimited by default"
+            "description": "Maximum size of the HTTP request content in bytes; unlimited by default."
           },
           "order": 40
         },
         "responseEncoding": {
-          "label": "Response encoding",
+          "label": "Response Encoding",
           "viewClass": "TextFieldView",
           "placeholder": "utf8",
           "help": {
-            "description": "Indicates encoding to use for decoding responses, by default <b>utf8</b> used, but in some cases, when you need to get data inside message you can use <b>base64</b> here"
+            "description": "Indicates the encoding to use for decoding responses. By default, <b>utf8</b> is used, but in some cases, when you need to get data inside the message, you can use <b>base64</b>."
           },
           "order": 35
         }
@@ -146,7 +146,7 @@
     "httpRequestTrigger": {
       "deprecated": true,
       "main": "./lib/triggers/httpRequestTrigger.js",
-      "title": "HTTP request (request lib)",
+      "title": "HTTP Request (Request Library)",
       "help": {
         "description": "Will send a GET/POST/PUT/DELETE HTTP request and parse the response back to the flow",
         "link": "/components/rest-api/index.html#http-request"
@@ -209,7 +209,7 @@
     "httpRequestAction": {
       "deprecated": true,
       "main": "./lib/actions/httpRequestAction.js",
-      "title": "HTTP request (request lib)",
+      "title": "HTTP Request (Request Library)",
       "help": {
         "description": "Will send a GET/POST/PUT/DELETE HTTP request and parse the response back to the flow",
         "link": "/components/rest-api/index.html#http-request-1"
@@ -269,9 +269,9 @@
     },
     "httpRequestAxios": {
       "main": "./src/actions/httpRequest.js",
-      "title": "HTTP request (axios lib)",
+      "title": "HTTP Request (Axios Library)",
       "help": {
-        "description": "Will send a GET/POST/PUT/DELETE HTTP request and parse the response back to the flow",
+        "description": "Sends a GET, POST, PUT, or DELETE HTTP request and parses the response back to the flow.",
         "link": "/components/rest-api/index.html#http-request-axios"
       },
       "metadata": {
@@ -285,7 +285,7 @@
           "order": 95
         },
         "errorPolicy": {
-          "label": "Error handling policy",
+          "label": "Error Handling Policy",
           "viewClass": "SelectView",
           "placeholder": "Retry by component",
           "model": {
@@ -300,52 +300,52 @@
           "order": 90
         },
         "maxRetries": {
-          "label": "Maximum retries",
+          "label": "Maximum Retries",
           "placeholder": "10",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Set maximum retries attempts. This option works only when <b>Error handling policy</b> set as <b><i>Retry by component</i></b>. Default and maximum value - 10"
+            "description": "Set the maximum number of retry attempts. This option works only when <b>Error Handling Policy</b> is set to <b><i>Retry by component</i></b>. Default and maximum value is 10."
           },
           "order": 85
         },
         "errorCodes": {
-          "label": "Error codes",
+          "label": "Error Codes",
           "placeholder": "408, 423, 429, 500-599",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "A comma-separated list of codes or ranges. By default, the error handling policy is applied when you receive HTTP codes 408, 423, 429, and any codes greater than 500. However, you can override these codes using this field.<br><br>You can put here exactly codes:<br><b>401, 404, 503</b><br><br>Or you can use ranges:<br><b>400-401, 405-410, 502-509</b><br><br>Or combination of them:<br><b>403, 404, 500-599</b><br><br><br>Note: You can use only codes above 299 here, also not equal 401 if selected OAuth2 authentication"
+            "description": "A comma-separated list of codes or ranges. By default, the error handling policy is applied when you receive HTTP codes 408, 423, 429, and any codes from 500 onwards. You can override these default codes using this field.<br><br>Examples of valid entries:<br><b>Exact codes:</b> <br>401, 404, 503<br><br><b>Ranges:</b><br>400-401, 405-410, 502-509<br><br><b>Combinations:</b><br>403, 404, 500-599<br><br><b>Note:</b> You can only use codes above 299 here, and you cannot use code 401 if OAuth2 authentication is selected."
           },
           "order": 80
         },
         "downloadAsAttachment": {
-          "label": "Download as attachment",
+          "label": "Download as Attachment",
           "viewClass": "CheckBoxView",
           "help": {
-            "description": "If checked, component will download response data to internal storage as attachment"
+            "description": "If checked, the component will download response data to internal storage as an attachment."
           },
           "order": 75
         },
         "uploadFile": {
-          "label": "Upload file",
+          "label": "Upload File",
           "viewClass": "CheckBoxView",
           "help": {
-            "description": "If checked, you will be able to upload data. There are two options available: <br><br>1. Body content type <b>application/octet-stream</b> - in this case put your url to the file from internal or external storage directly to the \"Body\" field as a string<br><br>2. Body content type <b>multipart/form-data</b> - to use it, put an any key as a string, for example - \"file\" and value as an object (switch this field to \"JSONata Mode\"), where one of the object keys should be \"url\" with a link to the file.<br>Available parameters is this case:<br><b>* url</b> (string, required) - link to the file from internal or external storage<br><b>* filename</b> (string, optional) - name of the file<br><b>* knownLength</b> (number, optional) - size of the file.<br>Example of ready object:<div style=\"background-color:#E7E8EB;\">{<div style=\"margin-left:1em;\"><span style=\"color:#1d75b3;\">\"url\":</span> <span style=\"color:#b35e14;\">\"https://example.com/pic.jpg\"</span>,<br><span style=\"color:#1d75b3;\">\"filename\":</span> <span style=\"color:#b35e14;\">\"pic.jpg\"</span>,<br><span style=\"color:#1d75b3;\">\"knownLength\":</span> <span style=\"color:#75438a;\">15201</span></div>}</div>"
+            "description": "If checked, you will be able to upload data. Two options are available:<br><br>1. For body content type <b>application/octet-stream</b>, place the URL of the file from internal or external storage directly in the \"Body\" field as a string.<br><br>2. For body content type <b>multipart/form-data</b>, use any key as a string (e.g., \"file\") and the value as an object (switch this field to \"JSONata Mode\"). One of the object keys must be \"url\" with a link to the file.<br><br>Available parameters:<br><b>* url</b> (string, required) - link to the file from internal or external storage.<br><b>* filename</b> (string, optional) - name of the file.<br><b>* knownLength</b> (number, optional) - size of the file.<br><br>Example of a valid object:<div style=\"background-color:#E7E8EB;\">{<div style=\"margin-left:1em;\"><span style=\"color:#1d75b3;\">\"url\":</span> <span style=\"color:#b35e14;\">\"https://example.com/pic.jpg\"</span>,<br><span style=\"color:#1d75b3;\">\"filename\":</span> <span style=\"color:#b35e14;\">\"pic.jpg\"</span>,<br><span style=\"color:#1d75b3;\">\"knownLength\":</span> <span style=\"color:#75438a;\">15201</span></div>}</div>"
           },
           "order": 70
         },
         "noStrictSSL": {
-          "label": "Do not verify SSL certificate (unsafe)",
+          "label": "Do Not Verify SSL Certificate (Unsafe)",
           "viewClass": "CheckBoxView",
           "help": {
-            "description": "Unsafe option! Check it if you want to disable SSL certificate verification on the server"
+            "description": "Warning: This is an unsafe option! Check this box if you want to disable SSL certificate verification on the server."
           },
           "order": 65
         },
         "maxRedirects": {
-          "label": "Maximum redirects",
+          "label": "Maximum Redirects",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Defines the maximum number of redirects to follow. If set to 0, no redirects will be followed"
+            "description": "Defines the maximum number of redirects to follow. If set to 0, no redirects will be followed."
           },
           "order": 60
         },
@@ -353,40 +353,40 @@
           "label": "Delay in ms",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Delay calling the next request after the previous request. Max delay 1140000 (19min), default 0"
+            "description": "Delay the next request after the previous request. Maximum delay is 1,140,000 ms (19 minutes); default is 0."
           },
           "order": 55
         },
         "requestTimeoutPeriod": {
-          "label": "Request timeout",
+          "label": "Request Timeout",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Timeout period in milliseconds while component waiting for server response, should be positive integer (1-1140000), defaults to 100000 (100 sec)"
+            "description": "Timeout period in milliseconds while the component waits for a server response. Should be a positive integer (1-1,140,000); defaults to 100,000 ms (100 seconds)."
           },
           "order": 50
         },
         "maxContentLength": {
-          "label": "Response size limit",
+          "label": "Response Size Limit",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Maximum response size in bytes, maximum and default 20MB - for regular requests and 100MB - for attachments (if checked <b>Download as attachment</b>)"
+            "description": "Maximum response size in bytes; maximum and default is 20MB for regular requests and 100MB for attachments (if <b>Download as Attachment</b> is checked)."
           },
           "order": 45
         },
         "maxBodyLength": {
-          "label": "Request size limit",
+          "label": "Request Size Limit",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Maximum size of the http request content in bytes, unlimited by default"
+            "description": "Maximum size of the HTTP request content in bytes; unlimited by default."
           },
           "order": 40
         },
         "responseEncoding": {
-          "label": "Response encoding",
+          "label": "Response Encoding",
           "viewClass": "TextFieldView",
           "placeholder": "utf8",
           "help": {
-            "description": "Indicates encoding to use for decoding responses, by default <b>utf8</b> used, but in some cases, when you need to get data inside message you can use <b>base64</b> here"
+            "description": "Indicates the encoding to use for decoding responses. By default, <b>utf8</b> is used, but in some cases, when you need to get data inside the message, you can use <b>base64</b>."
           },
           "order": 35
         }

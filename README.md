@@ -9,9 +9,9 @@
   * [API Key Auth](#api-key-auth)
   * [OAuth2](#oauth2)
 * [Actions](#actions) 
-  * [HTTP Request (axios lib)](#http-request-axios-lib)
+  * [HTTP Request (Axios Library)](#http-request-axios-library)
 * [Triggers](#triggers) 
-  * [HTTP Request (axios lib)](#http-request-axios-lib) 
+  * [HTTP Request (Axios Library)](#http-request-axios-library) 
 * [Examples of Usage](#examples-of-usage)
   * [Uploading Files](#uploading-files)
   * [Sending XML or Text Data](#sending-xml-or-text-data)
@@ -62,7 +62,7 @@ If everything is successful, the component will automatically collect and refres
 
 ## Actions
 
-### HTTP Request (axios lib)
+### HTTP Request (Axios Library)
 
 #### Configuration Fields
 
@@ -116,8 +116,8 @@ If `Download as Attachment` is unchecked:
 
 ## Triggers
 
-### HTTP Request (axios lib)
-Refer to the actions section [HTTP Request (axios lib)](#http-request-axios-lib).
+### HTTP Request (Axios Library)
+Refer to the actions section [HTTP Request (Axios Library)](#http-request-axios-lib).
 
 ## Examples of Usage
 

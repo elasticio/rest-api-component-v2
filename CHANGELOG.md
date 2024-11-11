@@ -1,3 +1,9 @@
+## 2.1.0 (November 11, 2024)
+* Deprecated the action and trigger **HTTP Request (Request Library)** - the primary reason for this change is the reliance on the deprecated **request** library. 
+* Introduced a new action and trigger **HTTP Request (Axios Library)**.
+* Updated the Node engine to version 20.x.
+* Updated the Sailor version to 2.7.4
+
 ## 2.0.15 (March 22, 2024)
 * Updated the Sailor version to 2.7.2
 * Set the Node engine to 18.x

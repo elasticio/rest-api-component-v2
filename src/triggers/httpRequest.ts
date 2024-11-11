@@ -40,7 +40,7 @@ export async function processAction(msg: any = {}, cfg: Cfg) {
     result.responseBody = response.data;
   }
 
-  this.logger.info('request is done, emitting...');
+  this.logger.info('Request is done, emitting...');
   return messages.newMessageWithBody(result);
 }
 
