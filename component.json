@@ -1,6 +1,6 @@
 {
   "title": "REST API V2",
-  "version": "2.1.0-dev.9",
+  "version": "2.1.0-dev.10",
   "description": "A generic connector for accessing HTTP and REST APIs .",
   "authClientTypes": [
     "oauth2",
@@ -19,6 +19,7 @@
   },
   "triggers": {
     "httpRequestAxiosTrigger": {
+      "type": "polling",
       "main": "./src/triggers/httpRequest.js",
       "title": "HTTP Request (Axios Library)",
       "help": {
@@ -26,7 +27,7 @@
         "link": "/components/rest-api/index.html#http-request-axios"
       },
       "metadata": {
-        "out": "./lib/schemas/requestSchema.out.json"
+        "out": "./src/schemas/requestSchema.out.json"
       },
       "fields": {
         "reader": {
@@ -275,7 +276,7 @@
         "link": "/components/rest-api/index.html#http-request-axios"
       },
       "metadata": {
-        "out": "./lib/schemas/requestSchema.out.json"
+        "out": "./src/schemas/requestSchema.out.json"
       },
       "fields": {
         "reader": {
