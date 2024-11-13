@@ -225,6 +225,7 @@ export default class Client {
             if (filename) formDataOpts.filename = filename;
             form.append(pair.key, valueToSend, formDataOpts);
           } else {
+            if (typeof valueToSend !== 'string') valueToSend = JSON.stringify(valueToSend);
             form.append(pair.key, valueToSend);
           }
         }
