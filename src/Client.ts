@@ -272,22 +272,12 @@ export default class Client {
     if (secretType === 'api_key') {
       const { headerName, headerValue } = this.secret.credentials;
       if (!headerName || !headerValue) throw new Error('"Header Name" or "Header Value" is missing in the credentials section');
-      opts = {
-        ...opts,
-        headers: {
-          ...opts.headers || {},
-          [headerName]: headerValue,
-        }
-      };
+      opts.headers ||= {};
+      opts.headers[headerName] = headerValue;
     }
     if (secretType === 'oauth2') {
-      opts = {
-        ...opts,
-        headers: {
-          ...opts.headers || {},
-          Authorization: `Bearer ${this.secret.credentials.access_token}`
-        }
-      };
+      opts.headers ||= {};
+      opts.headers.Authorization = `Bearer ${this.secret.credentials.access_token}`;
     }
   }
 }
