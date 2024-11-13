@@ -139,7 +139,7 @@ export default class Client {
           if (errorPolicy === 'throwError') throw new Error(errMsg);
           if (errorPolicy === 'emit') return err.response;
           if (errorPolicy === 'rebound') return 'rebound';
-          const retryAfter = err.response?.headers?.['retry-after'] || 2 ** (currentRetry + 1);
+          const retryAfter = err.response?.headers?.['retry-after'] || 2 ** currentRetry;
           this.logger.error(`Going to retry after ${retryAfter}sec (${currentRetry + 1} of ${maximumRetries})`);
           await commons.sleep(retryAfter * 1000);
         } else {
@@ -165,10 +165,10 @@ export default class Client {
     for (const codeOrRange of errorCodes.split(',').map((_codeOrRange) => _codeOrRange.trim())) {
       if (/\D+/.test(codeOrRange)) {
         const range = codeOrRange.split('-');
-        if (range.length !== 2) throw new Error(`Invalid code or range - "${codeOrRange}" in "Error codes" field`);
-        range.forEach((code) => { if (commons.isNumberNaN(code)) throw new Error(`Invalid code "${code}" in range - "${codeOrRange}" in "Error codes" field`); });
+        if (range.length !== 2) throw new Error(`Invalid code or range - "${codeOrRange}" in "Error Codes for retry" field`);
+        range.forEach((code) => { if (commons.isNumberNaN(code)) throw new Error(`Invalid code "${code}" in range - "${codeOrRange}" in "Error Codes for retry" field`); });
         const [start, end] = range.map(Number);
-        if (start > end) throw new Error(`Invalid range - "${codeOrRange}", first code should be less than second in "Error codes" field`);
+        if (start > end) throw new Error(`Invalid range - "${codeOrRange}", first code should be less than second in "Error Codes for retry" field`);
         for (let i = start; i <= end; i++) {
           result.push(i);
         }

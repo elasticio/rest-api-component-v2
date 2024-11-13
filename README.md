@@ -80,7 +80,7 @@ If everything is successful, the component will automatically collect and refres
   * `Don't retry (throw error)` - The component will throw an error directly.
   * `Emit error as message (don't throw errors)` - The component will send a message with the response received from the server.
 * **Maximum Retries** (number, optional, default `10`) - Set the maximum number of retry attempts. This option is only applicable when the `Error Handling Policy` is set to `Retry by component`.
-* **Error Codes** (string, optional) - A comma-separated list of codes or ranges. By default, the error handling policy applies when you receive HTTP codes 408, 423, 429, and any codes greater than 500. However, you can override these codes using this field.
+* **Error Codes for retry** (string, optional) - A comma-separated list of codes or ranges. By default, the error handling policy applies when you receive HTTP codes 408, 423, 429, and any codes greater than 500. However, you can override these codes using this field.
   
   * You can specify exact codes: `401, 404, 503`.
   * You can also use ranges: `400-401, 405-410, 502-509`.
@@ -96,7 +96,7 @@ If everything is successful, the component will automatically collect and refres
     * `knownLength` (number, optional) - The size of the file.
 * **Do Not Verify SSL Certificate (unsafe)** (boolean) - Check this option if you want to disable SSL certificate verification on the server.
 * **Maximum Redirects** (number, optional, default `5`) - Defines the maximum number of redirects to follow. If set to 0, no redirects will be followed.
-* **Delay in ms** (number, optional, default `5`) - Delay the next request after the previous request by the specified milliseconds. The maximum delay is 1,140,000 (19 minutes), with a default of 0.
+* **Delay in ms** (number, optional, default `0`) - Delay the next request after the previous request by the specified milliseconds. The maximum delay is 1140000 (19 minutes), with a default of 0.
 * **Request Timeout** (number, optional, default `100000` - 100 seconds) - The timeout period in milliseconds while the component waits for a server response. It should be a positive integer between `1` and `1,140,000` (19 minutes).
 * **Response Size Limit** (number, optional) - The maximum response size in bytes, with a maximum and default of 20MB for regular requests and 100MB for attachments (if `Download as Attachment` is checked).
 * **Request Size Limit** (number, optional, default `unlimited`) - The maximum size of the HTTP request content in bytes.

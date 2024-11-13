@@ -1,6 +1,6 @@
 {
   "title": "REST API V2",
-  "version": "2.1.0-dev.8",
+  "version": "2.1.0-dev.9",
   "description": "A generic connector for accessing HTTP and REST APIs .",
   "authClientTypes": [
     "oauth2",
@@ -60,7 +60,7 @@
           "order": 85
         },
         "errorCodes": {
-          "label": "Error Codes",
+          "label": "Error Codes for retry",
           "placeholder": "408, 423, 429, 500-599",
           "viewClass": "TextFieldView",
           "help": {
@@ -96,7 +96,7 @@
           "label": "Maximum Redirects",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Defines the maximum number of redirects to follow. If set to 0, no redirects will be followed."
+            "description": "Defines the maximum number of redirects to follow, default is 5. If set to 0, no redirects will be followed."
           },
           "order": 60
         },
@@ -104,7 +104,7 @@
           "label": "Delay in ms",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Delay the next request after the previous request. Maximum delay is 1,140,000 ms (19 minutes); default is 0."
+            "description": "Delay the next request after the previous request. Maximum delay is 1140000 ms (19 minutes); default is 0."
           },
           "order": 55
         },
@@ -309,7 +309,7 @@
           "order": 85
         },
         "errorCodes": {
-          "label": "Error Codes",
+          "label": "Error Codes for retry",
           "placeholder": "408, 423, 429, 500-599",
           "viewClass": "TextFieldView",
           "help": {
@@ -345,7 +345,7 @@
           "label": "Maximum Redirects",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Defines the maximum number of redirects to follow. If set to 0, no redirects will be followed."
+            "description": "Defines the maximum number of redirects to follow, default is 5. If set to 0, no redirects will be followed."
           },
           "order": 60
         },
@@ -353,7 +353,7 @@
           "label": "Delay in ms",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Delay the next request after the previous request. Maximum delay is 1,140,000 ms (19 minutes); default is 0."
+            "description": "Delay the next request after the previous request. Maximum delay is 1140000 ms (19 minutes); default is 0."
           },
           "order": 55
         },
