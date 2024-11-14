@@ -140,8 +140,10 @@ export default class Client {
           if (errorPolicy === 'emit') return err.response;
           if (errorPolicy === 'rebound') return 'rebound';
           const retryAfter = err.response?.headers?.['retry-after'] || 2 ** currentRetry;
-          this.logger.error(`Going to retry after ${retryAfter}sec (${currentRetry + 1} of ${maximumRetries})`);
-          await commons.sleep(retryAfter * 1000);
+          if (currentRetry < maximumRetries) {
+            this.logger.error(`Going to retry after ${retryAfter}sec (${currentRetry + 1} of ${maximumRetries})`);
+            await commons.sleep(retryAfter * 1000);
+          }
         } else {
           throw err;
         }
