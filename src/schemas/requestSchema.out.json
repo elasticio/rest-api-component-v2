@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "required": true,
+  "properties": {
+    "statusCode": {
+      "type": "number"
+    },
+    "HTTPHeaders": {
+      "type": "object"
+    },
+    "responseBody": {
+      "type": "object"
+    },
+    "attachmentUrl": {
+      "type": "string"
+    }
+  }
+}

@@ -1,296 +1,156 @@
-[![elasticio](https://circleci.com/gh/elasticio/rest-api-component-v2.svg?style=svg)](https://app.circleci.com/pipelines/github/elasticio/rest-api-component-v2) [![CLA assistant](https://cla-assistant.io/readme/badge/elasticio/rest-api-component-v2)](https://cla-assistant.io/elasticio/rest-api-component-v2)
+# REST API v2 Component
+
+## Table of Contents
+
+* [Description](#description)
+* [Credentials](#credentials)
+  * [No Auth](#no-auth)
+  * [Basic Auth](#basic-auth)
+  * [API Key Auth](#api-key-auth)
+  * [OAuth2](#oauth2)
+* [Actions](#actions) 
+  * [HTTP Request (Axios Library)](#http-request-axios-library)
+* [Triggers](#triggers) 
+  * [HTTP Request (Axios Library)](#http-request-axios-library) 
+* [Examples of Usage](#examples-of-usage)
+  * [Uploading Files](#uploading-files)
+  * [Sending XML or Text Data](#sending-xml-or-text-data)
+  * [Sending JSON Data](#sending-json-data)
+
+## Description
+The REST API v2 Component is designed to interact with the most common APIs that are based on the HTTP protocol.
+
+## Credentials
+The component supports several authentication types. Depending on the selected type, different credential fields will be required.
+
+### No Auth
+This option does not require any specific fields and is used for APIs that do not require authentication or if you need to implement a custom mechanism, such as using the request body.
+
+### Basic Auth
+This is one of the simplest techniques for enforcing access controls to web resources. It uses two fields:
+* **Username** (string, required)
+* **Password** (string, required)
+
+Each request will include an additional header field in the form of `Authorization: Basic <credentials>`, where `<credentials>` is the Base64 encoding of **Username** and **Password** joined by a single colon `:`.
+
+### API Key Auth
+An API key is a secret unique identifier used to authenticate and authorize access to an API. It requires two fields:
+* **Header Name** (string, required)
+* **Header Value** (string, required)
+
+Each request will include an additional header field formatted as `<Header Name>: <Header Value>`.
+
+### OAuth2
+OAuth2 is an authorization flow that allows third-party applications, such as this component, to access a user’s resources without sharing their credentials. It uses tokens to grant limited access to services, enabling secure delegated access across different platforms.
+
+Before creating this type of credentials, you typically need to establish an integration in the external system—this could be a client/application or something similar. Often, you will also need to provide a redirect URI for this platform, which will look like `https://{your-tenant-address}/callback/oauth2`.
+
+After that, you will need to fill in the following fields in the component:
+* **Choose Auth Client** (dropdown, required) - Select one of the clients created earlier or choose `Add New Auth Client`:
+  * **Name** (string, required) - Can be any name you choose.
+  * **Client ID** (string, required)
+  * **Client Secret** (string, required)
+  * **Authorization Endpoint** (string, required)
+  * **Token Endpoint** (string, required)
+  * **Refresh Token Endpoint** (string, optional)
+* **Scopes (Comma-separated list)** (string, optional) - Enter the required scopes here, if necessary.
+* **Additional parameters (Comma-separated list)** (string, optional) - In some cases, you may need to add additional parameters to the authorization request; you can include them here.
+
+After filling in all required information, press the `Authenticate` button. A new window for the third-party system should open, where you need to log in and grant access.
+
+If everything is successful, the component will automatically collect and refresh the access token, which will be added to the headers of each request in the form of `Authorization: Bearer <access token>`.
+
+## Actions
+
+### HTTP Request (Axios Library)
+
+#### Configuration Fields
+
+* **Method** (dropdown, required): The HTTP verb to use in the request, which can be one of `GET`, `POST`, `PUT`, `DELETE`, or `PATCH`.
+* **URL** (string, required) - The URL of the REST API resource.
+* **Headers** tab: This includes the `Add Header` button, which is used to add custom headers to your request. Each header consists of two fields: the first is used as the header key, and the second is used as the header value.
+* **Body** tab (available only if `Method` is not `GET`) has the following fields:
+  * **Content Type** (string, required): The type of data that you are going to send.
+  * **Body** (object/string/dynamic fields, required) - Based on the provided `Content Type`, the component will generate the appropriate fields:
+    * If `multipart/form-data` or `application/x-www-form-urlencoded` is selected, there will be an `Add Part` button used to add parts to your request; each part consists of a key and a value.
+    * For other cases, a single input field for the body will be generated, allowing you to input an object (using a JSONata expression) or text (if you need to send XML).
+* **Error Handling Policy** (dropdown, optional, default `Retry by component`) - The component considers the following codes as errors that can be handled: *`408`*, *`423`*, *`429`*, everything greater than *`500`*, and *`ECONNABORTED`* (timeout). You can select one of the available options:
+  * `Retry by component` - The component will attempt to retry this request.
+  * `Use rebound functionality` - The component will send the incoming message back to the queue; after some time, this message will return (you can find more information about how rebounds work in the platform documentation).
+  * `Don't retry (throw error)` - The component will throw an error directly.
+  * `Emit error as message (don't throw errors)` - The component will send a message with the response received from the server.
+* **Maximum Retries** (number, optional, default `10`) - Set the maximum number of retry attempts. This option is only applicable when the `Error Handling Policy` is set to `Retry by component`.
+* **Error Codes for retry** (string, optional) - A comma-separated list of codes or ranges. By default, the error handling policy applies when you receive HTTP codes 408, 423, 429, and any codes greater than 500. However, you can override these codes using this field.
+  
+  * You can specify exact codes: `401, 404, 503`.
+  * You can also use ranges: `400-401, 405-410, 502-509`.
+  * You can combine them: `403, 404, 500-599`.
+
+  Note: You can only include codes above 299 here, and you cannot include 401 if OAuth2 authentication is selected.
+* **Download as Attachment** (boolean) - If checked, the component will download response data to internal storage as an attachment, and you will receive a URL to it instead of the response body.
+* **Upload File** (boolean) - If checked, you will be able to upload data via two available methods: 
+  * For body content type `application/octet-stream`, provide the URL to the file from internal or external storage directly in the "Body" field as a string.
+  * For body content type `multipart/form-data`, specify any key as a string (e.g., `file`) and the value as an object (switch the field to "JSONata Mode"), where one of the object keys should be `url`, pointing to the file. Available parameters in this case:
+    * `url` (string, required) - The link to the file from internal or external storage.
+    * `filename` (string, optional) - The name of the file.
+    * `knownLength` (number, optional) - The size of the file.
+* **Do Not Verify SSL Certificate (unsafe)** (boolean) - Check this option if you want to disable SSL certificate verification on the server.
+* **Maximum Redirects** (number, optional, default `5`) - Defines the maximum number of redirects to follow. If set to 0, no redirects will be followed.
+* **Delay in ms** (number, optional, default `0`) - Delay the next request after the previous request by the specified milliseconds. The maximum delay is 1140000 (19 minutes), with a default of 0.
+* **Request Timeout** (number, optional, default `100000` - 100 seconds) - The timeout period in milliseconds while the component waits for a server response. It should be a positive integer between `1` and `1,140,000` (19 minutes).
+* **Response Size Limit** (number, optional) - The maximum response size in bytes, with a maximum and default of 20MB for regular requests and 100MB for attachments (if `Download as Attachment` is checked).
+* **Request Size Limit** (number, optional, default `unlimited`) - The maximum size of the HTTP request content in bytes.
+* **Response Encoding** (string, optional, default `utf8`) - Indicates the encoding to use for decoding responses. In some cases, when you need to extract data from the message, you can use `base64` here.
 
-# REST API v2 component
+#### Input Metadata
+None
 
-The **REST API component** is a simple yet powerful component that allows you to connect to any REST API without programming your own components and deploying them into the platform.
+#### Output Metadata
+* **statusCode** (number, required) - The HTTP status code of the response.
+* **HTTPHeaders** (object, required) - The response headers.
 
-The REST API component will perform a single REST API call when executed. Incoming data can gets used to configure the API call made and the response from the API call will be the output.
+If `Download as Attachment` is checked:
+* **attachmentUrl** (string, required) - The link to your file stored in internal storage.
+If `Download as Attachment` is unchecked:
+* **responseBody** (object/string) - The content of the response.
 
-This document covers the following topics:
+## Triggers
 
-*   [Introduction](#introduction)
-*   [Authorisation methods](#authorisation-methods)
-*   [Defining HTTP headers](#defining-http-headers)
-*   [Defining request body](#defining-request-body)
-*   [Working with Cookies](#cookies)
-*   [Attachments](#attachments)
-*   [Output](#output)
-*   [Exception handling](#exception-handling)
-*   [Known Limitations](#known-limitations)
-*   [Contributing](https://github.com/elasticio/microsoft-onedrive-component/blob/master/CONTRIBUTING.md)
+### HTTP Request (Axios Library)
+Refer to the actions section [HTTP Request (Axios Library)](#http-request-axios-lib).
 
+## Examples of Usage
 
-## Introduction
+### Uploading Files
+To upload a file, ensure that you check the `Upload File` option in the configuration. You will then have the following options:
 
-The image below illustrates the configuration of the component.
+#### Upload Using `application/octet-stream`
+![image](https://github.com/user-attachments/assets/c2624659-28bb-46f3-ae30-d7ef4a7aa6f0)
 
-![Configuration of the component](https://github.com/elasticio/rest-api-component-v2/assets/8449044/727ceb4b-7e47-4c4a-a758-2ad6871cf5d4)
+1. Add the URL to which you will upload the file.
+2. Set the Body content type to `application/octet-stream`.
+3. In the body, provide the URL to the data source from which you need to retrieve the file.
 
-Numbers show:
+#### Upload Using `multipart/form-data`
+![image](https://github.com/user-attachments/assets/617a4db4-7145-44a9-9bab-9d5346056c10)
 
-1 - Method of the REST API resource
+1. Add the URL to which you will upload the file.
+2. Set the Body content type to `multipart/form-data`.
+3. Press the `Add Part` button.
+4. Enter a key that describes the field containing the data; a common name is `file`.
+5. Switch to `JSONata mode`.
+6. Create an object with the key `url`—this will be the data source from which you need to retrieve the file.
 
-2 - URL of the REST API resource
+### Sending XML or Text Data
+![image](https://github.com/user-attachments/assets/be948d9a-1d1a-4a36-8660-ce65438f7034)
 
-3 - HTTP headers
+1. In `Integrator mode`, you can simply place your text or XML inside the body.
+2. Mapping from previous steps is also available.
 
-And here are the remaining configuration options (see details below):
+You can switch to `JSONata mode` if you need to utilize JSONata expressions.
 
-![Other configurations of the component](https://github.com/elasticio/rest-api-component-v2/assets/8449044/779b0838-c58a-450e-9beb-d0bf8b82a053)
+### Sending JSON Data
+![image](https://github.com/user-attachments/assets/c2954ce2-4c8b-4bfc-9c9f-2345c406c4e1)
 
-1. HTTP methods and URL
- * REST API component supports the following HTTP methods: `GET`, `PUT`, `POST`, `DELETE` and `PATCH`.
- * The URL of the REST API resources. Accepts JSONata expressions, meaning the URL address evaluates [JSONata](http://jsonata.org/) expressions.
-2. Request Headers and Body
- * Definition of request [headers](#defining-http-headers)
- * Definition of request [body](#defining-request-body), if the HTTP method is not `GET`
-3. Configuration options
- * ``Don`t throw Error on Failed Calls`` - if enabled return error, error code and stacktrace in message body otherwise throw error in flow.
- * ``Split Result if it is an Array`` - if enabled and response is array, creates message for each item of array. Otherwise create one message with response array.  
- * ``Retry on failure`` - enabling [rebound](https://docs.elastic.io/getting-started/rebound.html) feature for following HTTP status codes:
-    - 408: Request Timeout
-    - 423: Locked
-    - 429: Too Many Requests
-    - 500: Internal Server Error
-    - 502: Bad Gateway
-    - 503: Service Unavailable
-    - 504: Gateway Timeout
-    - DNS lookup timeout
-4. ``Do not verify SSL certificate (unsafe)`` - disable verifying the server certificate - **unsafe**.
-5. ``Follow redirect mode`` - If you want to disable Follow Redirect functionality, you can use option ``Follow redirect mode``.By default ``Follow redirect mode`` option has value ``Follow redirects``.
-6. ``Delay`` - If you want to slow down requests to your API you can set delay value (in seconds) and the component will delay calling the next request after the previous request.
-Time for the delay is calculated as `Delay`/ `Call Count` and shouldn't be more than 1140 seconds (19 minutes due to platform limitation). 
-The `Call Count` value by default is 1. If you want to use another value, please set the `Call Count` field. 
-Notice: See [Known Limitations](#known-limitations) about `Delay` value.
-7. ``Call Count`` - the field should be used only in pair with `Delay`, default to 1.
-8. ``Request timeout`` - Timeout period in milliseconds (1-1140000) while component waiting for server response, also can be configured with REQUEST_TIMEOUT environment variable if configuration field is not provided. Defaults to 100000 (100 sec).
-Notice: Specified for component REQUEST_TIMEOUT enviroment variable would be overwritten by specified value of Request timeout, default value would be also overwritten
-
-#### Environment variables 
-| NAME                       | DESCRIPTION                                                                             | DEFAULT   | OPTIONAL |
-|----------------------------|-----------------------------------------------------------------------------------------|-----------|----------|
-| REQUEST_TIMEOUT            | HTTP authorization request timeout in milliseconds.                                                   | 10000     | true     |
-| REQUEST_RETRY_DELAY        | Delay between authorization retry attempts in milliseconds                                            | 5000      | true     |
-| REQUEST_MAX_RETRY          | Number of HTTP authorization request retry attempts.                                                  | 3         | true     |
-
-## Authorisation methods
-
-To utilize the REST API component with any restricted-access API, please provide the necessary authorization information.
-
-Basic Authorisation credentials:
-
-![Basic Authorisation](https://github.com/elasticio/rest-api-component-v2/assets/8449044/9de9bf64-3142-4193-8736-3e52a99254f8)
-Example above shows how to add the username/password to access the API during the integration flow design.
-
-You can add the authorisation methods during the integration flow design or by going to the left sidebar, choosing `Credentials > REST API V2` 
-and adding there.
-
-OAuth2 Authorisation credentials:
-
-![OAuth2 Authorisation](https://github.com/elasticio/rest-api-component-v2/assets/8449044/94849a0a-afde-47f2-b1a8-a682297181cd)
-Example above shows how to add new credential to access the API from Credentials page.
-
-REST API component supports 4 authorisation types:
-
-*   `No Auth` - use this method to work with any open REST API
-*   `Basic Auth` - use it to provide login credentials like **username/password**
-*   `API Key Auth` - use it to provide `API Key` to access the resource
-*   `OAuth2` - use it to provide `Oauth2` credentials to access the resource. Currently, `Authorization code` OAuth2 flow is supported only.
-
-To create `OAuth2` credential you have to choose Auth-client or create the new one. It must contain `Name`, `Client ID`, `Client Secret`, `Authorization Endpoint` and `Token Endpoint`.
-
-Creating auth client for REST API component:
-
-![Auth Client](https://github.com/elasticio/rest-api-component-v2/assets/8449044/f8073632-6e61-4341-9982-6699f63a4633)
-
-Example above shows how to add new Auth-client to access the API.
-
-## Defining HTTP headers
-
-Use this section to add the request headers.
-
-![Request Headers](https://github.com/elasticio/rest-api-component-v2/assets/8449044/c1737354-6695-4168-b7f1-efda49f476e5)
-
-Each header has a name and a value. Header name should be colon-separated name-value pairs in clear-text `string` format. The header value can use [JSONata](http://jsonata.org/) expressions.
-
-*Note:* **HTTP Response headers** will not be stored, the components stores body and attachment only.
- 
-## Defining request body
-
-The body may be defined if the HTTP method is not `GET`. The **body** tab enables configuration options such as the **content type** drop-down menu and the **body input field**.
-
-Here is the list of all supported **content types**:
-
-*   `multipart/form-data`
-*   `application/x-www-form-urlencoded`
-*   `text/plain`
-*   `application/json`
-*   `application/xml`
-*   `text/xml`
-*   `text/html`
-
-The **body input field** changes according to the chosen content type.
-
-*Notes:* 
-1. **Response body** will be stored in msg.body
-2. Request body that causes empty response body will return `{}`
-
-### Sending JSON data
-
-Here is how to send a JSON data in the body. Change the **Content-Type** to `application/json` and the **body input part** would change accordingly to accept JSON object. Please note that this field supports [JSONata](http://jsonata.org) expressions.
-
-![Request Body](https://github.com/elasticio/rest-api-component-v2/assets/8449044/12b222e9-265a-41b4-8d09-38e9232403ff)
-
-Example shows the JSON in the body where the field `objectType` has a fixed value `customer` while values of the fields `firstName` and `lastName` are mapped using the values coming from the previous integrations step.
-
-### Sending XML data
-
-To send an `XML` data set the content type to `application/xml` or `text/xml` and place the `XML` in the body input field between double-quotes like:
-
-```
-"
-<note>
-  <to>" & fname & "</to>
-  <from>Jani</from>
-  <heading>Reminder</heading>
-  <body>Don't forget me this weekend!</body>
-</note>
-"
-```
-
-Use a JSONata expression to include and map any values coming from the previous steps. It will replace the variable with a real value in the final mapping. Note that the rest of `XML` gets passed as a `string`.
-
-### Sending Form data
-
-To send a form data two content types are available:
-
-*   `application/x-www-form-urlencoded` - used to submit simple values to a form
-*   `multipart/form-data` - used to submit (non-alphanumeric) data or file attachment in payload
-
-In both cases the payload gets transmitted in the message body.
-
-In case of `application/x-www-form-urlencoded` content type add the necessary parameters by giving the name and the values like:
-
-![REST API component Body sending a simple form](https://github.com/elasticio/rest-api-component-v2/assets/8449044/fb41f284-0219-41c9-bc88-b0abb3a09033)
-
-Please note that parameter value fields support JSONata expressions.
-
-This HTTP request would submit `key1=value1&key2=value2` in the message body.
-
-In case of `multipart/form-data` content type add the parameters similarly.
-
-![REST API component Body sending a complex form](https://github.com/elasticio/rest-api-component-v2/assets/8449044/376bd4f4-d001-4cc6-9ac0-12cc15ab530f)
-
-The transmitted HTTP request body would be:
-
-```
---__X_ELASTICIO_BOUNDARY__
-Content-Disposition: form-data; name="part1"
-
-Please note that this fields supports [JSONata](http://jsonata.org) expressions.
---__X_ELASTICIO_BOUNDARY__
-Content-Disposition: form-data; name="part2"
-
-<p>Some more text</p>
---__X_ELASTICIO_BOUNDARY__--
-```
-
-Notice how different parts get separated by the boundary. This form is capable of supporting attachments as well.
-
-### Working with XML
-
-This component will try to parse XML content types in the HTTP Response assuming the `Content-Type` header has a
-**MIME Content Type** with `xml` in it (e.g. `application/xml`). 
-In this case response body will be parsed to JSON using `xml2js` node library and following settings:
-
-```js
-{
-    trim: false,
-    normalize: false,
-    explicitArray: false,
-    normalizeTags: false,
-    attrkey: '_attr',
-    tagNameProcessors: [
-        (name) => name.replace(':', '-')
-    ]
-}
-```
-
-for more information please see the 
-[Documenattion of XML2JS library](https://github.com/Leonidas-from-XIV/node-xml2js#options)
-
-## HTTP Headers 
-
-You can to get HTTP response header only if ``Don`t throw Error on Failed Calls`` option is checked.
-In this case output structure of component will be: 
-```json
-{
-  "headers": <HTTP headers>,
-  "body": <HTTP response body>,
-  "statusCode": <HTTP response status code>
-  "statusMessage": <HTTP response status message>
-    }
-```
-
-## Cookies
-
-Sometimes it's required to read and set cookies. To read cookies you should have gain access to the `Set-Cookie` headers of the _HTTP Response_,
-in this case you should check the ``Don`t throw Error on Failed Calls`` option. Please note that HTTP Response may have **multiple**
-`Set-Cookie` headers therefore you should expect to find an **array** of values in the HTTP Response
-
-![Cookies](https://github.com/elasticio/rest-api-component-v2/assets/8449044/fd7f1270-e1bd-4886-a6b5-8ccad4203786)
-
-To _set_ Cookies you could simply use the HTTP header on your _Response_ called `Cookie` to a cookie value to a 
-list of name-value pairs in the form of <cookie-name>=<cookie-value>. Pairs in the list are separated by a semicolon and a space ('; ') 
-like `yummy_cookie=choco; tasty_cookie=strawberry`. More information on setting the cookies can be found [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cookie).
-
-## Attachments
-Rest API component has opportunity of binary data sending. You just need choose ``multipart/form-data`` Content type and attachments from input message will be included to the request payload automatically.
-
-Rest-api component automatically load binary data to attachments with next content types in response headers:
-* image/*
-* text/csv
-* application/msword
-* application/msexcel
-* application/pdf
-* application/octet-stream
-* application/x-binary
-* application/binary
-* application/macbinary
-
-## Output
-The messages produced by the REST API component will have the following properties:
-* `headers`: Object containing the HTTP response headers
-* `statusCode`: HTTP Status Code of the Response. Number between `100` and `599` 
-* `statusMessage`: Human readable equivalent to the response code
-* `body`: The contents of the HTTP response body:
-  * When the content type header includes `json`, then the result will be parsed into the corresponding object
-  * When the content type header includes `xml`, then the result will be converted into the JSON equivalent of the represented XML using the same rules as above
-  * When the content type header includes one of `image`, `msword`, `msexcel`, `pdf`, `csv`, `octet-stream` or `binary` the request body contents will be stored as an attachment and there will be no `body` property in the outgoing message
-  * When there is no body (because the content-length is 0), then there will be no `body` property in the outbound message.
-  * If there is another content type, then the response will be treated as text
-  * If the content type header is omitted, then an attempt to convert the result to JSON will be made. If that fails, then the result will be treated as if it were text.
-
-## Exception handling
-Rest API component uses exception handling logic below: 
-![Exception handling logic](https://user-images.githubusercontent.com/5710732/99240680-1d7ef200-27fd-11eb-9b14-c9aaf7c23bb1.jpg)
-
-## Known Limitations
-
-**1.** The component can parse any of json and xml content types. 
-There are:
-* application/json
-* application/xml
-* text/xml
-* etc.
-
-`If content type is not  exists  in response header, component will try parse response as json. 
-If it get parse exception, it return response as is.`
-
-**2.** Attachments limitations:
-
--  Maximal possible size for an attachment is 10 MB.
-
-**3.** We suggest not to set Delay value more than time period between two executions of the flow.
-Please keep in mind that delay can influence on time of next execution. 
-For example, the flow has type `Ordinary` and scheduled to execution for every 1 minute, but the delay is set to 120 sec, so the next execution will be started only after 120 sec, instead of 1 minute.
+1. In `JSONata mode`, you can simply place your JSON inside the body.
+2. Mapping from previous steps and any JSONata expressions are also available.
