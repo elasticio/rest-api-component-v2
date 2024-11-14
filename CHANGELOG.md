@@ -1,4 +1,4 @@
-## 2.1.0 (November 11, 2024)
+## 2.1.0 (November 14, 2024)
 * Deprecated the action and trigger **HTTP Request (Request Library)** - the primary reason for this change is the reliance on the deprecated **request** library. 
 * Introduced a new action and trigger **HTTP Request (Axios Library)**.
 * Updated the Node engine to version 20.x.
