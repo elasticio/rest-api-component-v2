@@ -80,6 +80,7 @@ export default class Client {
     }
 
     if (responseEncoding) axiosConfig.responseEncoding = responseEncoding;
+    if (maxBodyLength) axiosConfig.maxBodyLength = Number(maxBodyLength);
 
     this.ax = axios.create(axiosConfig);
   }
