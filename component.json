@@ -362,7 +362,7 @@
           "label": "Request Timeout",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Timeout period in milliseconds while the component waits for a server response. Should be a positive integer (1-1,140,000); defaults to 100,000 ms (100 seconds)."
+            "description": "Timeout period in milliseconds while the component waits for a server response. Should be a positive integer (1-1140000); defaults to 100000 ms (100 seconds)."
           },
           "order": 50
         },
