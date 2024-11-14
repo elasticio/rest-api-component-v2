@@ -116,7 +116,7 @@ export default class Client {
     let response;
     let errMsg;
     let currentRetry = 0;
-    while (currentRetry < maximumRetries) {
+    do {
       this.lastRequest = Date.now();
       try {
         const opts = await this.getOptions();
@@ -147,7 +147,7 @@ export default class Client {
         }
       }
       currentRetry++;
-    }
+    } while (currentRetry < maximumRetries);
     throw new Error(errMsg);
   }
 
