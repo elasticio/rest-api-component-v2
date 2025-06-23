@@ -208,7 +208,11 @@ export default class Client {
           const parsedValue = transform(pair.value);
           params.append(pair.key, typeof parsedValue === 'object' ? JSON.stringify(parsedValue) : parsedValue);
         }
-        opts.params = params;
+        if (method.toUpperCase() === 'GET') {
+          opts.params = params;
+        } else {
+          opts.data = params.toString();
+        }
       }
     } else if (body.contentType.toLowerCase() === 'multipart/form-data') {
       const { formData } = body;

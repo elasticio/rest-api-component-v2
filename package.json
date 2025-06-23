@@ -16,12 +16,12 @@
         "node": "20.x"
     },
     "dependencies": {
-        "@elastic.io/component-commons-library": "3.2.1",
-        "axios": "1.7.7",
+        "@elastic.io/component-commons-library": "3.2.2",
+        "axios": "1.9.0",
         "duplex": "1.0.0",
         "elasticio-node": "0.0.9",
         "elasticio-rest-node": "1.2.7",
-        "elasticio-sailor-nodejs": "2.7.4",
+        "elasticio-sailor-nodejs": "2.7.5",
         "form-data": "4.0.1",
         "request-promise": "4.2.2",
         "uuid": "8.3.1",

@@ -1,3 +1,8 @@
+## 2.1.1 (June 23, 2025)
+* Fixed incorrect placement of application/x-www-form-urlencoded parameters in POST requests
+* Updated `component-commons-library` to version 3.2.2
+* Updated `Sailor` to version to 2.7.5
+
 ## 2.1.0 (November 14, 2024)
 * Deprecated the action and trigger **HTTP Request (Request Library)** - the primary reason for this change is the reliance on the deprecated **request** library. 
 * Introduced a new action and trigger **HTTP Request (Axios Library)**.
