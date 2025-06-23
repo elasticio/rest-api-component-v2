@@ -17,7 +17,7 @@
     },
     "dependencies": {
         "@elastic.io/component-commons-library": "3.2.2",
-        "axios": "1.9.0",
+        "axios": "1.10.0",
         "duplex": "1.0.0",
         "elasticio-node": "0.0.9",
         "elasticio-rest-node": "1.2.7",
