@@ -217,19 +217,19 @@ describe('"Client (axios)"', async () => {
     it('404', async () => {
       const additionalOptions = { errorCodes: '404' };
       client.setCfgAndMsg({ ...cfg, ...additionalOptions }, msg);
-      const codes = client.parseCustomErrorCodesRange();
+      const codes = client.parseCustomErrorCodesRange('errorCodes');
       assert.deepEqual(codes, [404]);
     });
     it('401-404', async () => {
       const additionalOptions = { errorCodes: '401-404' };
       client.setCfgAndMsg({ ...cfg, ...additionalOptions }, msg);
-      const codes = client.parseCustomErrorCodesRange();
+      const codes = client.parseCustomErrorCodesRange('errorCodes');
       assert.deepEqual(codes, [401, 402, 403, 404]);
     });
     it('401, 501-503, 402', async () => {
       const additionalOptions = { errorCodes: '401, 501-503, 402' };
       client.setCfgAndMsg({ ...cfg, ...additionalOptions }, msg);
-      const codes = client.parseCustomErrorCodesRange();
+      const codes = client.parseCustomErrorCodesRange('errorCodes');
       assert.deepEqual(codes, [401, 501, 502, 503, 402]);
     });
   });

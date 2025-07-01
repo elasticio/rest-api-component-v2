@@ -1,6 +1,6 @@
 {
   "title": "REST API V2",
-  "version": "2.1.1-dev.1",
+  "version": "2.2.0-dev.1",
   "description": "A generic connector for accessing HTTP and REST APIs .",
   "authClientTypes": [
     "oauth2",
@@ -51,6 +51,24 @@
           },
           "order": 90
         },
+        "errorCodes": {
+          "label": "Error Codes for Error Handling Policy",
+          "placeholder": "408, 423, 429, 500-599",
+          "viewClass": "TextFieldView",
+          "help": {
+            "description": "A comma-separated list of codes or ranges. By default, the error handling policy is applied when you receive HTTP codes 408, 423, 429, and any codes from 500 onwards. You can override these default codes using this field.<br><br>Examples of valid entries:<br><b>Exact codes:</b> <br>401, 404, 503<br><br><b>Ranges:</b><br>400-401, 405-410, 502-509<br><br><b>Combinations:</b><br>403, 404, 500-599<br><br><b>Note:</b> You can only use codes above 299 here, and you cannot use code 401 if OAuth2 authentication is selected."
+          },
+          "order": 80
+        },
+        "ignoreErrorCodes": {
+          "label": "Error Codes to emit as messages",
+          "placeholder": "400, 402-404",
+          "viewClass": "TextFieldView",
+          "help": {
+            "description": "A comma-separated list of codes or ranges. By default, this list is empty. When specified, the component will emit a message containing the error instead of throwing it upon receiving one of these codes. This feature is useful for handling specific errors gracefully without interrupting the workflow.<br><br>Note: These codes have higher priority than those specified in the <b>Error Codes for Error Handling Policy</b> and will ignore <b>Error Handling Policy</b>.<br><br>Examples of valid entries:<br><b>Exact codes:</b> <br>400, 402, 404<br><br><b>Ranges:</b><br>400-401, 402-404, 500-502<br><br><b>Combinations:</b><br>400, 401, 403-404<br><br><b>Note:</b> You can only use codes above 299 here, and you cannot use code 401 if OAuth2 authentication is selected."
+          },
+          "order": 78
+        },
         "maxRetries": {
           "label": "Maximum Retries",
           "placeholder": "10",
@@ -58,16 +76,7 @@
           "help": {
             "description": "Set the maximum number of retry attempts. This option works only when <b>Error Handling Policy</b> is set to <b><i>Retry by component</i></b>. Default and maximum value is 10."
           },
-          "order": 85
-        },
-        "errorCodes": {
-          "label": "Error Codes for retry",
-          "placeholder": "408, 423, 429, 500-599",
-          "viewClass": "TextFieldView",
-          "help": {
-            "description": "A comma-separated list of codes or ranges. By default, the error handling policy is applied when you receive HTTP codes 408, 423, 429, and any codes from 500 onwards. You can override these default codes using this field.<br><br>Examples of valid entries:<br><b>Exact codes:</b> <br>401, 404, 503<br><br><b>Ranges:</b><br>400-401, 405-410, 502-509<br><br><b>Combinations:</b><br>403, 404, 500-599<br><br><b>Note:</b> You can only use codes above 299 here, and you cannot use code 401 if OAuth2 authentication is selected."
-          },
-          "order": 80
+          "order": 77
         },
         "downloadAsAttachment": {
           "label": "Download as Attachment",
@@ -300,6 +309,24 @@
           },
           "order": 90
         },
+        "errorCodes": {
+          "label": "Error Codes for Error Handling Policy",
+          "placeholder": "408, 423, 429, 500-599",
+          "viewClass": "TextFieldView",
+          "help": {
+            "description": "A comma-separated list of codes or ranges. By default, the error handling policy is applied when you receive HTTP codes 408, 423, 429, and any codes from 500 onwards. You can override these default codes using this field.<br><br>Examples of valid entries:<br><b>Exact codes:</b> <br>401, 404, 503<br><br><b>Ranges:</b><br>400-401, 405-410, 502-509<br><br><b>Combinations:</b><br>403, 404, 500-599<br><br><b>Note:</b> You can only use codes above 299 here, and you cannot use code 401 if OAuth2 authentication is selected."
+          },
+          "order": 80
+        },
+        "ignoreErrorCodes": {
+          "label": "Error Codes to emit as messages",
+          "placeholder": "400, 402-404",
+          "viewClass": "TextFieldView",
+          "help": {
+            "description": "A comma-separated list of codes or ranges. By default, this list is empty. When specified, the component will emit a message containing the error instead of throwing it upon receiving one of these codes. This feature is useful for handling specific errors gracefully without interrupting the workflow.<br><br>Note: These codes have higher priority than those specified in the <b>Error Codes for Error Handling Policy</b> and will ignore <b>Error Handling Policy</b>.<br><br>Examples of valid entries:<br><b>Exact codes:</b> <br>400, 402, 404<br><br><b>Ranges:</b><br>400-401, 402-404, 500-502<br><br><b>Combinations:</b><br>400, 401, 403-404<br><br><b>Note:</b> You can only use codes above 299 here, and you cannot use code 401 if OAuth2 authentication is selected."
+          },
+          "order": 78
+        },
         "maxRetries": {
           "label": "Maximum Retries",
           "placeholder": "10",
@@ -307,16 +334,7 @@
           "help": {
             "description": "Set the maximum number of retry attempts. This option works only when <b>Error Handling Policy</b> is set to <b><i>Retry by component</i></b>. Default and maximum value is 10."
           },
-          "order": 85
-        },
-        "errorCodes": {
-          "label": "Error Codes for retry",
-          "placeholder": "408, 423, 429, 500-599",
-          "viewClass": "TextFieldView",
-          "help": {
-            "description": "A comma-separated list of codes or ranges. By default, the error handling policy is applied when you receive HTTP codes 408, 423, 429, and any codes from 500 onwards. You can override these default codes using this field.<br><br>Examples of valid entries:<br><b>Exact codes:</b> <br>401, 404, 503<br><br><b>Ranges:</b><br>400-401, 405-410, 502-509<br><br><b>Combinations:</b><br>403, 404, 500-599<br><br><b>Note:</b> You can only use codes above 299 here, and you cannot use code 401 if OAuth2 authentication is selected."
-          },
-          "order": 80
+          "order": 77
         },
         "downloadAsAttachment": {
           "label": "Download as Attachment",
