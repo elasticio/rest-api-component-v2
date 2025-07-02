@@ -1,8 +1,6 @@
 ## 2.2.0 (July 01, 2025)
-* Filed `Error Codes for retry` was renamed to `Error Codes for Error Handling Policy` to avoid confusing
+* Field `Error Codes for retry` was renamed to `Error Codes for Error Handling Policy` to avoid confusing
 * Added new field `Error Codes to emit as messages`
-
-## 2.1.1 (June 23, 2025)
 * Fixed incorrect placement of application/x-www-form-urlencoded parameters in POST requests
 * Updated `component-commons-library` to version 3.2.2
 * Updated `Sailor` to version to 2.7.5
