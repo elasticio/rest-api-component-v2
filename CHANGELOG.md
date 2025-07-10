@@ -1,4 +1,4 @@
-## 2.2.0 (July 01, 2025)
+## 2.2.0 (July 10, 2025)
 * Field `Error Codes for retry` was renamed to `Error Codes for Error Handling Policy` to avoid confusing
 * Added new field `Error Codes to emit as messages`
 * Fixed incorrect placement of application/x-www-form-urlencoded parameters in POST requests
