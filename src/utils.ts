@@ -76,6 +76,7 @@ export interface Cfg {
   maxContentLength?: string
   maxBodyLength?: string
   errorCodes?: string
+  ignoreErrorCodes?: string
   responseEncoding?: string
   downloadAsAttachment?: boolean
   uploadFile?: boolean

@@ -60,7 +60,8 @@ export default class Client {
     checkNumField('Maximum redirects', maxRedirects, 0, MAX_REDIRECTS);
     checkNumField('Request size limit', maxBodyLength, 1, Infinity);
     checkNumField('Response size limit', maxContentLength, 1, maxLength);
-    this.parseCustomErrorCodesRange();
+    this.parseCustomErrorCodesRange('errorCodes');
+    this.parseCustomErrorCodesRange('ignoreErrorCodes');
 
     const axiosConfig: CreateAxiosDefaults = {};
     axiosConfig.timeout = requestTimeoutPeriod ? Number(requestTimeoutPeriod) : DEFAULT_TIME_OUT;
@@ -136,6 +137,8 @@ export default class Client {
             await this.refreshAndGetNewSecret();
           }
           this.logger.debug('Trying to use new token');
+        } else if (this.checkIfErrorCodeInIgnoreRange(err.response?.status)) {
+          return err.response;
         } else if (this.checkIfErrorCodeInErrorRange(err.response?.status) || err.code === 'ECONNABORTED') {
           if (errorPolicy === 'throwError') throw new Error(errMsg);
           if (errorPolicy === 'emit') return err.response;
@@ -157,21 +160,29 @@ export default class Client {
   checkIfErrorCodeInErrorRange(code?: number): boolean {
     if (!code) return false;
     if (!this.cfg.errorCodes) return [408, 423, 429].includes(code) || code >= 500;
-    const customErrorRange = this.parseCustomErrorCodesRange();
+    const customErrorRange = this.parseCustomErrorCodesRange('errorCodes');
     return customErrorRange.includes(code);
   }
 
-  parseCustomErrorCodesRange(): number[] {
+  checkIfErrorCodeInIgnoreRange(code?: number): boolean {
+    if (!code) return false;
+    const customErrorRange = this.parseCustomErrorCodesRange('ignoreErrorCodes');
+    return customErrorRange.includes(code);
+  }
+
+  parseCustomErrorCodesRange(field: 'errorCodes' | 'ignoreErrorCodes'): number[] {
     const result = [];
-    const { errorCodes } = this.cfg;
-    if (!errorCodes) return result;
-    for (const codeOrRange of errorCodes.split(',').map((_codeOrRange) => _codeOrRange.trim())) {
+    const { errorCodes, ignoreErrorCodes } = this.cfg;
+    const codesToCheck = field === 'errorCodes' ? errorCodes : ignoreErrorCodes;
+    const fieldName = field === 'errorCodes' ? 'Error Codes for Error Handling Policy' : 'Error Codes to emit as messages';
+    if (!codesToCheck) return result;
+    for (const codeOrRange of codesToCheck.split(',').map((_codeOrRange) => _codeOrRange.trim())) {
       if (/\D+/.test(codeOrRange)) {
         const range = codeOrRange.split('-');
-        if (range.length !== 2) throw new Error(`Invalid code or range - "${codeOrRange}" in "Error Codes for retry" field`);
-        range.forEach((code) => { if (commons.isNumberNaN(code)) throw new Error(`Invalid code "${code}" in range - "${codeOrRange}" in "Error Codes for retry" field`); });
+        if (range.length !== 2) throw new Error(`Invalid code or range - "${codeOrRange}" in "${fieldName}" field`);
+        range.forEach((code) => { if (commons.isNumberNaN(code)) throw new Error(`Invalid code "${code}" in range - "${codeOrRange}" in "${fieldName}" field`); });
         const [start, end] = range.map(Number);
-        if (start > end) throw new Error(`Invalid range - "${codeOrRange}", first code should be less than second in "Error Codes for retry" field`);
+        if (start > end) throw new Error(`Invalid range - "${codeOrRange}", first code should be less than second in "${fieldName}" field`);
         for (let i = start; i <= end; i++) {
           result.push(i);
         }
@@ -208,7 +219,11 @@ export default class Client {
           const parsedValue = transform(pair.value);
           params.append(pair.key, typeof parsedValue === 'object' ? JSON.stringify(parsedValue) : parsedValue);
         }
-        opts.params = params;
+        if (method.toUpperCase() === 'GET') {
+          opts.params = params;
+        } else {
+          opts.data = params.toString();
+        }
       }
     } else if (body.contentType.toLowerCase() === 'multipart/form-data') {
       const { formData } = body;
