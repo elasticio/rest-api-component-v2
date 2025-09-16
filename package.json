@@ -2,6 +2,7 @@
     "name": "@elasticio/rest-api-component-v2",
     "description": "REST API component v2",
     "scripts": {
+        "audit": "better-npm-audit audit --level high --production",
         "pretest": "eslint --ext .ts --quiet --fix && find src -name \"*.js\" -type f -delete",
         "test": "LOG_OUTPUT_MODE='short' node --import tsx --test ./spec/*/*test.ts ./spec/*test.ts",
         "posttest": "tsc"
@@ -21,6 +22,7 @@
         "duplex": "1.0.0",
         "elasticio-rest-node": "2.0.0",
         "elasticio-sailor-nodejs": "2.7.6",
+        "better-npm-audit": "3.11.0",
         "form-data": "4.0.4",
         "request-promise": "4.2.2",
         "uuid": "8.3.1",
