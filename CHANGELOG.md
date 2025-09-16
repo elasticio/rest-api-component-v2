@@ -1,3 +1,8 @@
+## 2.2.1 (September 16, 2025)
+* Improved Error Handling Policy description
+* Updated `component-commons-library` to version 4.0.0
+* Updated `Sailor` to version to 2.7.6
+
 ## 2.2.0 (July 10, 2025)
 * Field `Error Codes for retry` was renamed to `Error Codes for Error Handling Policy` to avoid confusing
 * Added new field `Error Codes to emit as messages`

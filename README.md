@@ -78,7 +78,9 @@ If everything is successful, the component will automatically collect and refres
   * `Retry by component` - The component will attempt to retry this request.
   * `Use rebound functionality` - The component will send the incoming message back to the queue; after some time, this message will return (you can find more information about how rebounds work in the platform documentation).
   * `Don't retry (throw error)` - The component will throw an error directly.
-  * `Emit error as message (don't throw errors)` - The component will send a message with the response received from the server.
+  * `Emit error as message (don't throw errors)` - The component will send a message with the response received from the server.  
+  **Important:** This option applies only to error codes that the component considers "handled errors" by default (`408`, `423`, `429`, all codes `>= 500`, and `ECONNABORTED`).  
+  If you want to treat other codes (for example `404` or `401`) as messages instead of errors, you must explicitly list them in the **Error Codes to emit as messages** field.
 * **Error Codes for Error Handling Policy** (string, optional) - A comma-separated list of codes or ranges. By default, the error handling policy applies when you receive HTTP codes 408, 423, 429, and any codes greater than 500. However, you can override these codes using this field.
   
   * You can specify exact codes: `401, 404, 503`.

@@ -1,8 +1,7 @@
-import { messages } from 'elasticio-node';
 import * as commons from '@elastic.io/component-commons-library';
 import { writeFile } from 'node:fs/promises';
 import { createReadStream } from 'node:fs';
-import { Cfg, getUserAgent } from '../utils';
+import { Cfg, getUserAgent, messages } from '../utils';
 import Client from '../Client';
 
 let client: Client;
