@@ -123,6 +123,7 @@ export default class Client {
       try {
         const opts = await this.getOptions();
         this.addAuthentication(opts);
+        this.logger.info('Request options: ', opts);
         response = await this.ax(opts);
         return response;
       } catch (err) {
