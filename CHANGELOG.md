@@ -1,4 +1,4 @@
-## 2.2.1 (September 16, 2025)
+## 2.2.1 (September 19, 2025)
 * Improved Error Handling Policy description
 * Updated `component-commons-library` to version 4.0.0
 * Updated `Sailor` to version to 2.7.6
