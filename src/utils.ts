@@ -158,3 +158,8 @@ export interface SecretApiKey extends SecretBase { type: 'api_key'; credentials:
 export type Secret = SecretBasic | SecretOAuth | SecretNoAuth | SecretApiKey;
 
 export interface Fields { }
+
+export const messages = {
+  newMessageWithBody: (body: any) => ({ body, headers: {} }),
+  newEmptyMessage: () => ({ body: {}, headers: {} }),
+};
