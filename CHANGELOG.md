@@ -1,5 +1,5 @@
 ## 2.2.2 (September 22, 2025)
-* Removed `elasticio-node` lib
+* Removed `elasticio-node` library from deprecated action and trigger to fix the bug introduced in version 2.2.1.
 
 ## 2.2.1 (September 19, 2025)
 * Improved Error Handling Policy description
