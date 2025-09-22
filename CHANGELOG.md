@@ -1,3 +1,6 @@
+## 2.2.2 (September 22, 2025)
+* Removed `elasticio-node` lib
+
 ## 2.2.1 (September 19, 2025)
 * Improved Error Handling Policy description
 * Updated `component-commons-library` to version 4.0.0

@@ -5,9 +5,9 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 const nock = require('nock');
 const fs = require('fs');
-const { messages } = require('elasticio-node');
 const logger = require('@elastic.io/component-logger')();
 const client = require('elasticio-rest-node')();
+const { messages } = require('../lib/utils');
 
 const { stub } = sinon;
 
