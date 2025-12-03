@@ -1,4 +1,4 @@
-## 2.2.3 (December 05, 2025)
+## 2.2.3 (December 03, 2025)
 * Updated `Sailor` to version 2.7.7
 * Updated the Node engine to version 22.x.
 
