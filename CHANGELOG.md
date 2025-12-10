@@ -1,4 +1,4 @@
-## 2.2.4 (December 10, 2025)
+## 2.2.4 (December 11, 2025)
 * Corrected Axios Request Timeout tooltip/doc to show the 60s (60000 ms) default.
 
 ## 2.2.3 (December 03, 2025)
