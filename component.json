@@ -1,6 +1,6 @@
 {
   "title": "REST API V2",
-  "version": "2.2.3",
+  "version": "2.2.4-dev.1",
   "description": "A generic connector for accessing HTTP and REST APIs .",
   "authClientTypes": [
     "oauth2",
@@ -122,7 +122,7 @@
           "label": "Request Timeout",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Timeout period in milliseconds while the component waits for a server response. Should be a positive integer (1-1140000); defaults to 100000 ms (100 seconds)."
+            "description": "Timeout period in milliseconds while the component waits for a server response. Should be a positive integer (1-1140000); defaults to 60000 ms (60 seconds)."
           },
           "order": 50
         },
@@ -380,7 +380,7 @@
           "label": "Request Timeout",
           "viewClass": "TextFieldView",
           "help": {
-            "description": "Timeout period in milliseconds while the component waits for a server response. Should be a positive integer (1-1140000); defaults to 100000 ms (100 seconds)."
+            "description": "Timeout period in milliseconds while the component waits for a server response. Should be a positive integer (1-1140000); defaults to 60000 ms (60 seconds)."
           },
           "order": 50
         },
