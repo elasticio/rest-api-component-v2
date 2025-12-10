@@ -1,3 +1,6 @@
+## 2.2.4 (December 11, 2025)
+* Corrected Axios Request Timeout tooltip/doc to show the 60s (60000 ms) default.
+
 ## 2.2.3 (December 03, 2025)
 * Updated `Sailor` to version 2.7.7
 * Updated the Node engine to version 22.x.
