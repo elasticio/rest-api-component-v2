@@ -95,10 +95,11 @@ export default class Client {
 
   async apiRequest(): Promise<AxiosResponse | 'rebound'> {
     if (!this.secret) {
-      this.logger.debug('Secret not found, going to fetch new one');
+      this.logger.info('Going to fetch secret');
       await this.getNewSecret();
-      this.logger.debug('Secret got successfully');
+      this.logger.info('Got secret');
     }
+    this.logger.info('Got request body');
 
     const { errorPolicy, maxRetries, delay } = this.cfg;
     checkNumField('Maximum retries', maxRetries, 0, MAX_RETRIES);
@@ -142,7 +143,10 @@ export default class Client {
         } else if (this.checkIfErrorCodeInErrorRange(err.response?.status) || err.code === 'ECONNABORTED') {
           if (errorPolicy === 'throwError') throw new Error(errMsg);
           if (errorPolicy === 'emit') return err.response;
-          if (errorPolicy === 'rebound') return 'rebound';
+          if (errorPolicy === 'rebound') {
+            this.logger.info('Starting rebound');
+            return 'rebound';
+          }
           const retryAfter = err.response?.headers?.['retry-after'] || 2 ** currentRetry;
           if (currentRetry < maximumRetries) {
             this.logger.error(`Going to retry after ${retryAfter}sec (${currentRetry + 1} of ${maximumRetries})`);

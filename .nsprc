@@ -3,8 +3,8 @@
     "active": true,
     "notes": "This vulnerability is in form-data used transitively via deprecated 'request' library. We do not use form-data directly. Waiting on upstream libraries to upgrade."
   },
-  "GHSA-869p-cjfg-cm3x": {
+  "GHSA-r5fr-rjxr-66jc": {
     "active": true,
-    "notes": "auth0/node-jws pulled via jsonwebtoken in @elastic.io/maester-client; not directly used by component runtime. Awaiting upstream fix."
+    "notes": "Lodash vulnerability used transitively via platform libraries. Awaiting upstream fix."
   }
 }
