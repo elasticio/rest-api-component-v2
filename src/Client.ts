@@ -95,9 +95,9 @@ export default class Client {
 
   async apiRequest(): Promise<AxiosResponse | 'rebound'> {
     if (!this.secret) {
-      this.logger.info('Going to fetch secret');
+      this.logger.debug('Going to fetch secret');
       await this.getNewSecret();
-      this.logger.info('Got secret');
+      this.logger.debug('Got secret');
     }
     this.logger.info('Got request body');
 
