@@ -5,15 +5,6 @@
   * `elasticio-sailor-nodejs` 2.7.7 -> 2.7.8
   * `form-data` 4.0.4 -> 4.0.5
   * `request-promise` 4.2.2 -> 4.2.6
-* Updated dev-dependencies:
-  * `typescript` 5.6.2 -> 5.8.2
-  * `eslint` 8.49.0 -> 8.57.1
-  * `mocha` 9.2.2 -> 11.1.0
-  * `chai` 4.2.0 -> 5.2.0
-  * `sinon` 9.2.1 -> 19.0.2
-  * `tsx` 4.19.1 -> 4.19.3
-  * `nock` 13.5.5 -> 14.0.1
-  * `@types/node` 20.16.0 -> 22.13.10
 
 ## 2.2.4 (December 11, 2025)
 * Corrected Axios Request Timeout tooltip/doc to show the 60s (60000 ms) default.
