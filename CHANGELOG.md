@@ -1,3 +1,11 @@
+## 2.2.5 (April 13, 2026)
+* Improved visibility of rebounds and request processing in logs for Axios library
+* Updated dependencies:
+  * `axios` 1.12.2 -> 1.15.0
+  * `elasticio-sailor-nodejs` 2.7.7 -> 2.7.8
+  * `form-data` 4.0.4 -> 4.0.5
+  * `request-promise` 4.2.2 -> 4.2.6
+
 ## 2.2.4 (December 11, 2025)
 * Corrected Axios Request Timeout tooltip/doc to show the 60s (60000 ms) default.
 
