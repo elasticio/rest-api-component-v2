@@ -1,4 +1,4 @@
-## 2.2.5 (April 09, 2026)
+## 2.2.5 (April 13, 2026)
 * Improved visibility of rebounds and request processing in logs for Axios library
 * Updated dependencies:
   * `axios` 1.12.2 -> 1.15.0
