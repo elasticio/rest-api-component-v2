@@ -1,3 +1,12 @@
+## 2.2.6 (August 05, 2026)
+* Updated Node engine to Node 24
+* Updated dependencies:
+  * `@elastic.io/component-commons-library` 4.0.0 -> 4.0.1
+  * `axios` 1.15.0 -> 1.19.0
+  * `form-data` 4.0.5 -> 4.0.6
+  * `uuid` 8.3.1 -> 14.0.1
+  * `xml2js` 0.4.23 -> 0.6.2
+
 ## 2.2.5 (April 13, 2026)
 * Improved visibility of rebounds and request processing in logs for Axios library
 * Updated dependencies:
