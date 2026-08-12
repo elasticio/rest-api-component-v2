@@ -1,4 +1,4 @@
-## 2.2.6 (August 05, 2026)
+## 2.2.6 (August 13, 2026)
 * Updated Node engine to Node 24
 * Updated dependencies:
   * `@elastic.io/component-commons-library` 4.0.0 -> 4.0.1
